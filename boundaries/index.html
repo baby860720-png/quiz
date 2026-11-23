@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>你替別人扛了多少課題？｜Vincent 讀書筆記</title>
+<meta name="description" content="6 題心理小測驗，看看你是全扛型、半扛型，還是分得清型。整理自《被討厭的勇氣》課題分離。">
+<meta property="og:title" content="你替別人扛了多少課題？">
+<meta property="og:description" content="6 題心理小測驗｜Vincent 讀書筆記：被討厭的勇氣">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 讀書筆記｜被討厭的勇氣 3/5</div>
+      <h1>你替別人<br>扛了多少<em>課題</em>？</h1>
+      <p>一件事的結果最後由誰承擔，就是誰的課題。很多讓你累的事，其實根本不是你的。</p>
+      <div class="meta">6 題・約 1 分鐘・憑直覺選</div>
+    </div>
+    <button class="btn btn-gold" id="start">開始測驗</button>
+    <p class="note">趣味自我檢視，不是專業心理評估<br>不會收集或送出你的任何資料</p>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="card">
+      <div class="qno" id="qno"></div>
+      <div class="q" id="q"></div>
+      <div id="opts"></div>
+    </div>
+    <button class="btn btn-ghost hide" id="back">回上一題</button>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag" id="rtag"></span>
+      <div class="rtitle" id="rtitle"></div>
+      <p class="rbody" id="rbody"></p>
+      <div class="tip" id="rtip"></div>
+    </div>
+    <div class="card cta">
+      <p>分清楚課題之後，生活會輕鬆很多，錢的事也一樣。想聊聊你現在卡住的地方，可以直接私訊我。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">再測一次</button>
+    </div>
+    <p class="note">截圖結果分享到限動，標記 @vincent781022<br>內容整理自《被討厭的勇氣》（岸見一郎、古賀史健）<br>趣味自我檢視，不是專業心理評估</p>
+  </section>
+
+</div>
+<script>
+window.QUIZ = {
+  questions: [
+    { q: "朋友找你幫忙，但你那天其實很累，你會？", options: [
+      { t: "還是答應，不想讓他失望", s: 2 },
+      { t: "直接說今天不方便，改天再約", s: 0 },
+      { t: "先答應，事後再找理由推掉", s: 1 } ] },
+    { q: "同事的工作出包，你會？", options: [
+      { t: "提醒他，但心裡一直替他擔心", s: 1 },
+      { t: "默默幫他收拾，不然整組都會被罵", s: 2 },
+      { t: "告訴他哪裡有問題，讓他自己處理", s: 0 } ] },
+    { q: "家人對你的選擇（工作、感情、花錢方式）有意見，你會？", options: [
+      { t: "好好說明自己的想法，然後照自己的決定走", s: 0 },
+      { t: "嘴上不說，心裡很在意", s: 1 },
+      { t: "為了不吵架，照他們的意思改", s: 2 } ] },
+    { q: "主管沒有稱讚你做的報告，你會？", options: [
+      { t: "一直想是不是自己哪裡做不好", s: 2 },
+      { t: "有點失落，但過一陣子就好", s: 1 },
+      { t: "確定自己盡力了，評價是主管的事", s: 0 } ] },
+    { q: "另一半或好朋友心情不好，你會？", options: [
+      { t: "陪著他，但自己也跟著很低落", s: 1 },
+      { t: "陪伴、問他需要什麼，知道心情要他自己消化", s: 0 },
+      { t: "覺得是自己的責任，一定要讓他開心起來", s: 2 } ] },
+    { q: "發了一篇貼文，按讚的人很少，你會？", options: [
+      { t: "發了就好，別人看不看是別人的事", s: 0 },
+      { t: "刪掉，覺得很丟臉", s: 2 },
+      { t: "一直點進去看有沒有變多", s: 1 } ] }
+  ],
+  results: [
+    { min: 9, max: 12, tag: "全扛型", title: "你在替別人過人生",
+      body: "你很善良、很怕別人失望，所以常常把別人的課題搬到自己肩上。結果是你很累，別人也不一定領情。",
+      tip: "下次想答應之前，先問自己：「這件事的結果，最後是誰承擔？」" },
+    { min: 4, max: 8, tag: "半扛型", title: "你知道，但還放不下",
+      body: "你已經知道很多事不是你的責任，只是心裡還是會掛著。這很正常，課題分離本來就要練習。",
+      tip: "把擔心換成一句話說出口：「我在這裡，需要我再跟我說。」然後把決定交還給對方。" },
+    { min: 0, max: 3, tag: "分得清型", title: "你的界線很清楚",
+      body: "你知道什麼是自己的事、什麼是別人的事，不太會被別人的情緒綁住。",
+      tip: "分得清楚不等於冷漠。願意陪伴、願意貢獻，才是《被討厭的勇氣》說的完整答案。" }
+  ]
+};
+</script>
+<script src="../assets/quiz.js"></script>
+</body>
+</html>

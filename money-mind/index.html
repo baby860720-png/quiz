@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>你的金錢潛意識類型｜10 題測驗解析</title>
+<meta name="description" content="10 題測出你跟金錢的潛意識關係：安全感型、享受型、成長型、距離型。">
+<meta property="og:title" content="你的金錢潛意識是哪一型？">
+<meta property="og:description" content="10 題測驗＋四種類型完整解析">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+.pick{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0 4px}
+.pick button{border:1px solid var(--line);background:var(--card2);border-radius:14px;padding:14px 0;font-size:22px;font-weight:700;font-family:var(--sans);color:var(--text);cursor:pointer}
+.pick button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12}
+.small{font-size:14px;color:var(--dim)}
+.rblock{border-top:1px dashed var(--line);padding-top:18px;margin-top:18px}
+.rblock:first-child{border-top:0;padding-top:0;margin-top:0}
+.count{font-size:14px;color:var(--dim);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">金錢潛意識測驗｜完整解析</div>
+      <h1>你跟錢的關係<br>是哪一<em>型</em>？</h1>
+      <p>同樣一筆錢，有人覺得安心、有人想花掉、有人想讓它長大，也有人乾脆不去想。測出你的類型，再看看可以怎麼調整。</p>
+      <div class="meta">10 題・約 2 分鐘・憑直覺選</div>
+    </div>
+    <button class="btn btn-gold" id="start">從頭測一次</button>
+    <div class="card" style="margin-top:16px">
+      <div class="qno">已經在影片裡算好了？</div>
+      <p class="small" style="margin-top:6px">點你出現最多次的字母，並列最高分可以複選。</p>
+      <div class="pick" id="pick"><button>A</button><button>B</button><button>C</button><button>D</button></div>
+      <button class="btn btn-gold" id="seePick" style="margin-top:12px">看我的解析</button>
+    </div>
+    <p class="note">趣味自我檢視，不是專業心理評估<br>不會收集或送出你的任何資料</p>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="card">
+      <div class="qno" id="qno"></div>
+      <div class="q" id="q"></div>
+      <div id="opts"></div>
+    </div>
+    <button class="btn btn-ghost hide" id="back">回上一題</button>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card" id="rcard"></div>
+    <div class="card cta">
+      <p>每一種類型都沒有好壞，重點是知道自己的習慣，再決定要不要調整。想聊聊你的類型、現在的錢可以怎麼安排，回 IG 私訊我，跟我說你是哪一型。</p>
+      <button class="btn btn-ghost" id="again">再測一次</button>
+    </div>
+    <p class="note">截圖你的結果分享到限動<br>趣味自我檢視，不是專業心理評估，也不是投資建議</p>
+  </section>
+
+</div>
+<script>
+// 每題的 A/B/C/D 固定對應：A 安全感、B 享受、C 成長、D 距離（跟影片題目卡一樣）
+const QS = [
+  ["突然領到一筆意料之外的獎金，你腦中閃過的第一個念頭是？", ["先存起來，比較安心", "終於可以買想要的東西了", "可以拿去投資，或學點東西", "怕自己亂花，乾脆先不去想"]],
+  ["有人跟你說「你不應該賺這麼多錢」，你的第一個反應是？", ["擔心是不是太多了，怕會失去", "管他的，賺到就是我的", "這是我努力應得的", "有點心虛，好像真的不太應該"]],
+  ["想到「有錢人」這三個字，你的感覺比較接近？", ["他們一定很有保障", "生活很自由，想買就買", "很會規劃，懂得讓錢工作", "有距離感，不是同一個世界"]],
+  ["小時候家人談到錢的時候，家裡的氣氛比較接近？", ["常常在擔心錢不夠", "有錢就花，很少討論", "會一起討論怎麼存、怎麼用", "很少談，談錢很敏感"]],
+  ["朋友跟你借一筆不算小的錢，你通常會？", ["很猶豫，怕借了要不回來", "能幫就幫，先借再說", "先問清楚用途和還款計畫", "很難拒絕，但心裡很不舒服"]],
+  ["薪水入帳的那一刻，你心裡最接近哪一種感受？", ["鬆一口氣，先看夠不夠付帳單", "開心，想好好犒賞自己", "開始想這個月要怎麼分配", "沒什麼感覺，很快就不見了"]],
+  ["下面哪一種情況，最讓你感到不舒服？", ["存款數字變少", "想買的東西買不起", "錢放著，沒有任何規劃", "被問到收入或存款"]],
+  ["你認為金錢在人生中扮演的角色，比較接近？", ["安全感的來源", "享受生活的工具", "達成目標的資源", "必要，但最好少想"]],
+  ["想像五年後你累積了一筆可觀的財富，你第一個想到的畫面是？", ["終於不用再擔心了", "去旅行，過想要的生活", "繼續放大，也幫助更多人", "有點不真實，想不太出來"]],
+  ["如果金錢是一個人，現在站在你面前，他的表情是？", ["很嚴肅，提醒我要小心", "笑得很開心", "很冷靜，在等我下指令", "有點陌生，跟我不太熟"]]
+];
+const TYPES = {
+  A: { tag: "A｜安全感型", title: "錢是你的安全感",
+       body: "存款數字讓你安心，花錢的時候常常會擔心。你很會守，這是很好的底子，只是有時候守到錢沒有機會長大，心裡還是不踏實。",
+       tip: "先把緊急預備金存好，安心之後，再撥一小部分學著讓錢工作。" },
+  B: { tag: "B｜享受型", title: "錢是用來過好生活的",
+       body: "你懂得犒賞自己，賺到就想讓生活更好。很會生活，但月底常常不知道錢去了哪裡，遇到突發狀況就會很緊。",
+       tip: "薪水一入帳先存一小筆，剩下的再盡情花，享受也會更安心。" },
+  C: { tag: "C｜成長型", title: "錢是幫你達成目標的資源",
+       body: "你喜歡規劃，會想怎麼讓錢變多。方向很好，要注意的是別只看報酬，也要把風險和自己撐得住多少下跌一起算進去。",
+       tip: "每一筆投資之前先問自己：最壞的情況，我撐得住嗎？" },
+  D: { tag: "D｜距離型", title: "你跟錢有點不熟",
+       body: "談錢讓你覺得敏感，最好少想。這不是你不會，而是很少有人好好跟你聊過錢。只要開始面對，你會比想像中更快上手。",
+       tip: "先從記帳一週開始，看懂錢去哪裡，就是跟錢變熟的第一步。" }
+};
+const $ = (s) => document.querySelector(s), L = "ABCD";
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+let i = 0, picks = [];
+function show(id) { ["#intro", "#quiz", "#result"].forEach((s) => $(s).classList.toggle("hide", s !== id)); window.scrollTo(0, 0); }
+function render() {
+  $("#bar").style.width = (i / QS.length) * 100 + "%";
+  $("#qno").textContent = `第 ${i + 1} 題 / 共 ${QS.length} 題`;
+  $("#q").textContent = QS[i][0];
+  $("#opts").innerHTML = QS[i][1].map((o, k) => `<button class="opt" data-k="${k}"><b style="color:#8a5a12">${L[k]}</b>　${esc(o)}</button>`).join("");
+  $("#back").classList.toggle("hide", i === 0);
+}
+function result(letters, counts) {
+  $("#rcard").innerHTML = letters.map((l) => {
+    const t = TYPES[l];
+    return `<div class="rblock"><span class="rtag">${t.tag}</span><div class="rtitle">${t.title}</div>` +
+      `<p class="rbody">${t.body}</p><div class="tip"><b>小練習：</b>${t.tip}</div></div>`;
+  }).join("") + (counts ? `<p class="count">你的次數：${L.split("").map((l, k) => `${l} ${counts[k]}`).join("、")}</p>` : "") +
+    (letters.length > 1 ? `<p class="count">並列最高分，兩種類型都可以參考。</p>` : "");
+  show("#result");
+}
+$("#start").onclick = () => { i = 0; picks = []; render(); show("#quiz"); };
+$("#opts").onclick = (e) => {
+  const b = e.target.closest(".opt"); if (!b) return;
+  b.classList.add("on"); picks.push(+b.dataset.k);
+  setTimeout(() => {
+    i++;
+    if (i < QS.length) return render();
+    $("#bar").style.width = "100%";
+    const c = [0, 0, 0, 0]; picks.forEach((k) => c[k]++); const m = Math.max(...c);
+    result(L.split("").filter((l, k) => c[k] === m), c);
+  }, 180);
+};
+$("#back").onclick = () => { if (i > 0) { i--; picks.pop(); render(); } };
+$("#pick").onclick = (e) => { const b = e.target.closest("button"); if (b) b.classList.toggle("on"); };
+$("#seePick").onclick = () => {
+  const ls = [...document.querySelectorAll("#pick button.on")].map((b) => b.textContent);
+  if (!ls.length) { alert("先點選你出現最多次的字母"); return; }
+  result(ls, null);
+};
+$("#again").onclick = () => show("#intro");
+</script>
+</body>
+</html>

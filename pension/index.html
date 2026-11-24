@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>勞退自提值不值得？試算表｜Vincent 財商筆記</title>
+<meta name="description" content="輸入月薪和稅率級距，算出勞退自提一年省多少稅、值不值得提。">
+<meta property="og:title" content="勞退自提值不值得？">
+<meta property="og:description" content="算出你一年省多少稅｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+.warn b{color:#a93226}
+.list li{margin:0 0 8px 20px;font-size:15.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜勞退自提試算</div>
+      <h1>勞退自提<br>你一年能省<em>多少稅</em>？</h1>
+      <p>月薪 5 萬自提 6%，有人省 1,800，有人省超過 1 萬。差別不在自提多少，在你的稅率級距。輸入 3 個數字，30 秒算出值不值得提。</p>
+      <div class="meta">3 個數字＋3 個問題・不會收集你的資料</div>
+    </div>
+    <div class="card">
+      <div class="qno">先搞懂一件事</div>
+      <p class="rbody" style="margin-top:10px">自提的錢是<b>你放進去的錢</b>，不是省下來的稅。真正省的稅＝<b>自提金額 × 你的稅率</b>。代價是：這筆錢要<b>鎖到 60 歲</b>才能領。</p>
+    </div>
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label for="sal">每月薪資（月提繳工資）</label>
+      <p class="hint">以勞保局月提繳工資分級表為準，最高 15 萬</p>
+      <div class="inp"><input id="sal" inputmode="numeric" placeholder="例如 50000"><span>元／月</span></div>
+      <label>自提比例</label>
+      <div class="seg" id="pct"><button data-v="0.02">2%</button><button data-v="0.04">4%</button><button data-v="0.06" class="on">6%</button></div>
+      <label>你的所得稅率級距</label>
+      <p class="hint">不確定的話：單身、只有薪水、年薪 80 萬以下，多半是 5%</p>
+      <div class="seg" id="rate" style="grid-template-columns:repeat(5,1fr)"><button data-v="0.05" class="on">5%</button><button data-v="0.12">12%</button><button data-v="0.2">20%</button><button data-v="0.3">30%</button><button data-v="0.4">40%</button></div>
+      <label>60 歲前，這筆錢可能會用到嗎？</label>
+      <div class="seg" id="q2"><button data-v="1">可能會</button><button data-v="0" class="on">應該不會</button><button data-v="2">不確定</button></div>
+      <label>不自提的話，這筆錢你存得下來嗎？</label>
+      <div class="seg" id="q3"><button data-v="1">存得下來</button><button data-v="0" class="on">多半會花掉</button><button data-v="2">不確定</button></div>
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我值不值得提</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的試算結果</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bucket b2"><div class="bt"><span>一年自提（你放進去的錢）</span><span class="amt" id="a1"></span></div><p>這筆錢進到你的勞退個人專戶，要 60 歲才能領。</p></div>
+      <div class="bucket b3"><div class="bt"><span>一年省下的稅</span><span class="amt" id="a2"></span></div><p id="p2"></p></div>
+      <div class="bucket b1"><div class="bt"><span>同樣提 6%，各級距省多少</span><span class="amt"></span></div><p id="p3"></p></div>
+      <div id="verdict"></div>
+    </div>
+    <div class="card">
+      <span class="rtag">提之前想清楚</span>
+      <ul class="list" style="margin-top:12px">
+        <li><b>錢鎖到 60 歲</b>：中途要用拿不出來，緊急預備金要另外準備</li>
+        <li><b>收益</b>：勞退基金有最低保證收益（不低於二年期定存利率），但實際收益會隨基金績效變動</li>
+        <li><b>省稅效果</b>：級距越高越明顯；5% 級距的人，省稅比較像「順便」，重點是強迫儲蓄</li>
+      </ul>
+    </div>
+    <div class="card cta">
+      <p>要不要自提，跟你的收入、存款習慣、什麼時候會用到錢都有關係。想知道你的整體配置怎麼排比較好，直接私訊我，跟我說你的級距和試算結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">截圖你的結果存起來<br>本頁為一般試算，不是稅務或投資建議；提繳工資、稅率級距與勞退規定以勞保局、財政部公告為準</p>
+  </section>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => Math.round(n).toLocaleString("zh-TW") + " 元";
+const S = { pct: 0.06, rate: 0.05, q2: 0, q3: 0 };
+["pct", "rate", "q2", "q3"].forEach((k) => $(k).onclick = (e) => { const b = e.target.closest("button"); if (!b) return; S[k] = +b.dataset.v; [...$(k).children].forEach((x) => x.classList.toggle("on", x === b)); });
+$("sal").addEventListener("input", (e) => { const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : ""; });
+$("calc").onclick = () => {
+  let sal = num("sal"); if (!sal) { alert("請輸入每月薪資"); return; }
+  const capped = Math.min(sal, 150000), year = capped * S.pct * 12, save = year * S.rate;
+  $("a1").textContent = fmt(year); $("a2").textContent = fmt(save);
+  $("p2").textContent = `${fmt(year)} × ${Math.round(S.rate * 100)}% 稅率` + (sal > 150000 ? "（月薪超過 15 萬，以 15 萬計算）" : "") + "，大約是每個月少繳 " + fmt(save / 12) + " 的稅。";
+  const y6 = capped * 0.06 * 12; $("p3").textContent = [0.05, 0.12, 0.2, 0.3, 0.4].map((r) => `${r * 100}%：${fmt(y6 * r)}`).join("　");
+  let score = (S.rate >= 0.12 ? 2 : 0) + (S.q2 === 0 ? 1 : S.q2 === 1 ? -2 : 0) + (S.q3 === 0 ? 1 : 0);
+  let v;
+  if (S.q2 === 1) v = ["先不急", "60 歲前可能會用到這筆錢，自提鎖住反而麻煩。先把預備金和短期要用的錢顧好，再來考慮。", "warn"];
+  else if (score >= 3) v = ["很值得提", S.rate >= 0.12 ? "你的級距在 12% 以上，省稅效果明顯，加上這筆錢短期用不到，自提很划算。" : "雖然省稅不多，但你說不提的話多半存不下來，自提等於幫自己強迫存退休金。", "tip"];
+  else if (score >= 1) v = ["可以考慮", "省稅有一點幫助，重點是你能不能接受錢鎖到 60 歲。可以先從 2%～4% 開始。", "tip"];
+  else v = ["先不急", "以你的狀況，省的稅不多，而且你自己存得下來。保留彈性、自己規劃退休金可能更適合你。", "tip"];
+  $("rtitle").innerHTML = `以你的狀況<br><em style="font-style:normal;color:#b07a1e">${v[0]}</em>`;
+  $("verdict").innerHTML = `<div class="${v[2]}" style="margin-top:6px">${v[1]}</div>`;
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

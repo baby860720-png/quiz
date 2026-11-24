@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>買房資金三層分配法｜Vincent 財商筆記</title>
+<meta name="description" content="輸入房價和手上的錢，算出買房資金怎麼分三層，交屋前遇到大跌也不慌。">
+<meta property="og:title" content="買房資金三層分配法">
+<meta property="og:description" content="算出你的買房資金怎麼分三層｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+.warn b{color:#a93226}
+.list li{margin:0 0 8px 20px;font-size:15.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜買房資金三層分配法</div>
+      <h1>買房的錢<br>不能<em>賭時機</em></h1>
+      <p>有人因為房貸受限只能拿現金交屋，剛好躲過股災，但那是運氣。把買房的錢分成三層，交屋前遇到大跌也不用慌。</p>
+      <div class="meta">5 個數字・約 2 分鐘・不會收集你的資料</div>
+    </div>
+    <div class="card">
+      <div class="qno">三層是什麼</div>
+      <ul class="list" style="margin-top:12px">
+        <li><b>① 生活與預備金</b>：買完房也要過日子，失業、生病的錢先留著不動</li>
+        <li><b>② 頭期與交屋款</b>：時間一到就要拿得出來，不能放在會大跌的地方</li>
+        <li><b>③ 長期投資</b>：短期用不到、跌了也不用賣的錢</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label for="price">想買的房子總價</label>
+      <div class="inp"><input id="price" inputmode="numeric" placeholder="例如 10000000"><span>元</span></div>
+      <label>打算自備幾成</label>
+      <p class="hint">實際貸款成數要看銀行審核和央行規定，首購多半自備 2～3 成</p>
+      <div class="seg" id="ratio"><button data-v="0.2">2 成</button><button data-v="0.3" class="on">3 成</button><button data-v="0.4">4 成</button></div>
+      <label>大概多久後要付頭期、交屋？</label>
+      <div class="seg" id="when"><button data-v="1">1 年內</button><button data-v="2" class="on">1～3 年</button><button data-v="3">3 年以上</button></div>
+      <label for="exp">每個月的固定支出</label>
+      <p class="hint">生活費＋房租＋保險等，用來算預備金（6 個月）</p>
+      <div class="inp"><input id="exp" inputmode="numeric" placeholder="例如 35000"><span>元／月</span></div>
+      <label for="total">目前手上可以動用的資金</label>
+      <p class="hint">存款＋投資部位，借來的錢不要算</p>
+      <div class="inp"><input id="total" inputmode="numeric" placeholder="例如 3000000"><span>元</span></div>
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我的三層分配</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的買房資金三層分配</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bar" id="bar"></div>
+      <div class="bucket b1"><div class="bt"><span>① 生活與預備金</span><span class="amt" id="a1"></span></div><p id="p1"></p></div>
+      <div class="bucket b2"><div class="bt"><span>② 頭期與交屋款</span><span class="amt" id="a2"></span></div><p id="p2"></p></div>
+      <div class="bucket b3"><div class="bt"><span>③ 長期投資</span><span class="amt" id="a3"></span></div><p id="p3"></p></div>
+      <div id="warns"></div>
+    </div>
+    <div class="card">
+      <span class="rtag">如果 ② 放在股市</span>
+      <p class="rbody" style="margin-top:12px" id="stress"></p>
+      <div class="tip"><b>重點：</b>② 的錢要的不是報酬，是「時間到一定拿得出來」。交屋日不會等股市回來。</div>
+    </div>
+    <div class="card cta">
+      <p>三層怎麼分只是第一步。頭期款怎麼準備、銀行能核多少成數、貸款條件怎麼談，每個人的狀況都不一樣。想聊聊你的買房計畫，直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">截圖你的分配表存起來<br>本頁為一般理財觀念試算，不是投資或貸款建議；稅費雜支為粗估，房貸成數與利率依央行規定及銀行審核為準</p>
+  </section>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => (n >= 10000 ? (Math.round(n / 1000) / 10).toLocaleString("zh-TW") + " 萬" : Math.round(n).toLocaleString("zh-TW")) + " 元";
+let ratio = 0.3, when = 2;
+function seg(id, set) { $(id).onclick = (e) => { const b = e.target.closest("button"); if (!b) return; set(+b.dataset.v); [...$(id).children].forEach((x) => x.classList.toggle("on", x === b)); }; }
+seg("ratio", (v) => ratio = v); seg("when", (v) => when = v);
+["price", "exp", "total"].forEach((id) => $(id).addEventListener("input", (e) => { const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : ""; }));
+$("calc").onclick = () => {
+  const price = num("price"), exp = num("exp"), total = num("total");
+  if (!price || !total) { alert("請至少填「房子總價」和「目前手上可以動用的資金」"); return; }
+  const emer = exp * 6, fee = price * 0.03, down = price * ratio + fee;
+  const need = emer + down, invest = Math.max(total - need, 0);
+  $("a1").textContent = fmt(emer); $("a2").textContent = fmt(down); $("a3").textContent = fmt(invest);
+  $("p1").textContent = exp ? `每月支出 ${fmt(exp)} × 6 個月，買完房也要留著，不拿去付頭期。` : "沒填每月支出，建議至少留 6 個月生活費。";
+  $("p2").textContent = `自備 ${ratio * 10} 成 ${fmt(price * ratio)}＋稅費、代書、仲介等雜支粗估 3% ${fmt(fee)}。` + (when < 3 ? "3 年內要用，放在存款、定存這類拿得出來、不會大跌的地方。" : "3 年以上才用，可以考慮穩健一點的工具，但越接近交屋越要轉回存款。");
+  $("p3").textContent = invest ? "扣掉①②之後短期用不到的錢，跌了也不用急著賣，才適合放進股票、ETF 這類波動大的投資。" : "目前還沒有多的錢可以長期投資。";
+  const T = Math.max(total, need), pct = (x) => (x / T) * 100;
+  $("bar").innerHTML = `<i style="width:${pct(Math.min(emer,total))}%;background:#b9ad95"></i><i style="width:${pct(Math.min(down,Math.max(total-emer,0)))}%;background:#d9b878"></i><i style="width:${pct(invest)}%;background:var(--gold)"></i>`;
+  let w = "";
+  if (total < need) {
+    $("rtitle").innerHTML = `還差 <em style="font-style:normal;color:#b07a1e">${fmt(need - total)}</em><br>①② 才補得滿`;
+    w = `<div class="warn"><b>先別急著用 ③ 去拚報酬。</b>頭期款還沒到位的階段，把錢放進大起大落的地方，最怕交屋前剛好遇到大跌。可以考慮延後買房時間、調整總價，或先跟銀行確認能核到的成數。</div>`;
+  } else {
+    $("rtitle").innerHTML = `頭期款已經到位<br>還能長期投資 <em style="font-style:normal;color:#b07a1e">${fmt(invest)}</em>`;
+  }
+  $("warns").innerHTML = w;
+  $("stress").innerHTML = `假設 ② 的 ${fmt(down)} 放在股市，遇到像上週那樣跌 <b>17%</b>，會少 <b>${fmt(down * 0.17)}</b>；跌 <b>30%</b> 會少 <b>${fmt(down * 0.3)}</b>。` + (when === 1 ? "<br>你 1 年內就要付款，這個缺口很可能來不及等回來。" : "<br>離付款時間越近，越沒有時間等它回來。");
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

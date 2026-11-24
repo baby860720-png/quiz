@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>花錢前的 3 個自問清單｜Vincent 讀書筆記</title>
+<meta name="description" content="想買東西之前先問自己 3 題，分清楚是需要還是比較。整理自《被討厭的勇氣》。">
+<meta property="og:title" content="花錢前的 3 個自問清單">
+<meta property="og:description" content="3 個練習問題｜Vincent 讀書筆記：被討厭的勇氣">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:14px;background:var(--card2);padding:12px 14px;font-size:16px;font-family:var(--sans);color:var(--text);line-height:1.6;resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold)}
+.hint{font-size:14px;color:var(--dim);margin:-8px 0 12px}
+.ans{background:var(--card2);border-radius:12px;padding:10px 14px;font-size:15px;margin:6px 0 14px;white-space:pre-wrap}
+.ans:empty::before{content:"（沒有寫，也沒關係）";color:var(--faint)}
+.lbl{font-size:13px;color:var(--gold);font-weight:700}
+</style>
+<style>
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.yn button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:12px;font-size:16px;font-family:var(--sans);cursor:pointer;color:var(--text)}
+.yn button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.line{background:var(--card2);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.line span{font-size:16px}
+.line button{flex:none;border:1px solid var(--line);background:#fff;border-radius:50px;padding:6px 12px;font-size:13px;cursor:pointer;color:#8a5a12}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tabs button{border:1px solid var(--line);background:var(--card2);border-radius:50px;padding:8px 14px;font-size:14px;cursor:pointer;color:var(--text);font-family:var(--sans)}
+.tabs button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.day{font-weight:700;color:var(--gold);margin:6px 0}
+textarea.s{min-height:60px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="tag">VINCENT 讀書筆記｜被討厭的勇氣 2/5</div>
+    <h1>花錢前的<br><em>3 個自問清單</em></h1>
+    <p>阿德勒說，煩惱幾乎都跟人有關。很多花錢的衝動，其實不是需要，是在跟別人比。下次想買東西之前，先跑一次這 3 題。</p>
+    <div class="meta">3 題・30 秒・不會收集你的資料</div>
+  </div>
+  <div class="card">
+    <div class="qno">你現在想買的是？</div>
+    <div class="inp" style="margin-top:10px"><input id="item" placeholder="例如：新手機"><span></span></div>
+    <div class="inp" style="margin-top:10px"><input id="price" inputmode="numeric" placeholder="價格，例如 35000"><span>元</span></div>
+  </div>
+  <div class="card" id="qs"></div>
+  <button class="btn btn-gold" id="go">看結果</button>
+  <section id="result" class="hide" style="margin-top:16px">
+    <div class="card">
+      <span class="rtag" id="rtag"></span>
+      <div class="rtitle" id="rtitle"></div>
+      <p class="rbody" id="rbody"></p>
+      <div class="tip" id="rtip"></div>
+    </div>
+    <div class="card cta">
+      <p>比較心很正常，重點是讓錢花在你真正在乎的地方。想聊聊你的錢怎麼分、哪些花得值得，直接私訊我。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+    </div>
+  </section>
+  <p class="note">內容整理自《被討厭的勇氣》（岸見一郎、古賀史健）<br>自我練習，不是專業心理或財務諮詢</p>
+</div>
+<script>
+const Q=["如果沒有人看得到，我還會想買嗎？","這是我需要的，而不是因為身邊的人有？","一個月後，我還會覺得這筆錢花得值得嗎？"];
+const A=[null,null,null]; const $=id=>document.getElementById(id);
+$("qs").innerHTML=Q.map((q,i)=>`<div style="margin-bottom:16px"><div class="qno">第 ${i+1} 題</div><div style="font-size:17px;font-weight:700;margin-top:4px">${q}</div><div class="yn" data-i="${i}"><button data-v="1">是</button><button data-v="0">不是／不確定</button></div></div>`).join("");
+document.querySelectorAll(".yn").forEach(g=>g.onclick=e=>{const b=e.target.closest("button"); if(!b)return; A[+g.dataset.i]=+b.dataset.v; [...g.children].forEach(x=>x.classList.toggle("on",x===b));});
+$("go").onclick=()=>{
+  if(A.includes(null)){alert("三題都選一下");return;}
+  const n=A.reduce((a,b)=>a+b,0), item=$("item").value.trim()||"這個東西", p=parseFloat(($("price").value||"").replace(/[^\d.]/g,""))||0;
+  if(n===3){$("rtag").textContent="三題都是";$("rtitle").textContent="安心買吧";$("rbody").textContent=`${item}是你自己真的想要、也覺得值得的。花在對的地方，就是好好照顧自己。`;$("rtip").innerHTML="<b>小提醒：</b>先確認預備金和固定支出都顧好了，再開心刷下去。";}
+  else{$("rtag").textContent=`有 ${3-n} 題猶豫`;$("rtitle").textContent="先放進購物車 3 天";$("rbody").textContent=`${item}可能有一部分是在跟別人比。放 3 天，如果還是很想要，再買也不遲。`;$("rtip").innerHTML=p?`<b>如果最後決定不買：</b>這 ${p.toLocaleString("zh-TW")} 元先存起來，一年像這樣省下 5 次，就是 ${(p*5).toLocaleString("zh-TW")} 元。`:"<b>小練習：</b>把想買的東西和價格記下來，3 天後再回來看看。";}
+  $("result").classList.remove("hide"); $("result").scrollIntoView({behavior:"smooth"});
+};
+</script>
+</body>
+</html>

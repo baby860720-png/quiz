@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>幸福三件事 7 天練習表｜Vincent 讀書筆記</title>
+<meta name="description" content="每天睡前 3 分鐘寫下三件事，連續 7 天。整理自《被討厭的勇氣》。">
+<meta property="og:title" content="幸福三件事 7 天練習表">
+<meta property="og:description" content="3 個練習問題｜Vincent 讀書筆記：被討厭的勇氣">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:14px;background:var(--card2);padding:12px 14px;font-size:16px;font-family:var(--sans);color:var(--text);line-height:1.6;resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold)}
+.hint{font-size:14px;color:var(--dim);margin:-8px 0 12px}
+.ans{background:var(--card2);border-radius:12px;padding:10px 14px;font-size:15px;margin:6px 0 14px;white-space:pre-wrap}
+.ans:empty::before{content:"（沒有寫，也沒關係）";color:var(--faint)}
+.lbl{font-size:13px;color:var(--gold);font-weight:700}
+</style>
+<style>
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px}
+.yn button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:12px;font-size:16px;font-family:var(--sans);cursor:pointer;color:var(--text)}
+.yn button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.line{background:var(--card2);border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.line span{font-size:16px}
+.line button{flex:none;border:1px solid var(--line);background:#fff;border-radius:50px;padding:6px 12px;font-size:13px;cursor:pointer;color:#8a5a12}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.tabs button{border:1px solid var(--line);background:var(--card2);border-radius:50px;padding:8px 14px;font-size:14px;cursor:pointer;color:var(--text);font-family:var(--sans)}
+.tabs button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.day{font-weight:700;color:var(--gold);margin:6px 0}
+textarea.s{min-height:60px;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="tag">VINCENT 讀書筆記｜被討厭的勇氣 5/5</div>
+    <h1>幸福三件事<br><em>7 天練習表</em></h1>
+    <p>人生是跳舞，不是登山。不用等到山頂才幸福，每天睡前花 3 分鐘寫下三件事，連續 7 天。</p>
+    <div class="meta">每天 3 分鐘・寫的內容只存在你自己的手機</div>
+  </div>
+  <div class="card">
+    <div class="qno">三件事是什麼</div>
+    <ul class="list" style="margin-top:12px">
+      <li><b>自我接納</b>：今天的我，有哪一件事比昨天進步一點點？60 分到 61 分也算</li>
+      <li><b>他者信賴</b>：今天我主動相信了誰、伸出了什麼手？</li>
+      <li><b>他者貢獻</b>：今天我對誰有幫助？哪怕只是一句謝謝</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="tabs" id="days"></div>
+    <div class="day" id="dayt"></div>
+    <textarea class="s" id="t0" placeholder="自我接納：今天比昨天進步的一件事"></textarea>
+    <textarea class="s" id="t1" placeholder="他者信賴：今天我相信了誰"></textarea>
+    <textarea class="s" id="t2" placeholder="他者貢獻：今天我幫助了誰"></textarea>
+    <p class="note" id="prog" style="margin-top:6px"></p>
+  </div>
+  <div class="card cta">
+    <p>理財也是跳舞，不用等存夠一大筆錢才開始，今天比昨天多懂一點就是進步。想聊聊你的第一步，直接私訊我。</p>
+    <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+  </div>
+  <p class="note">內容整理自《被討厭的勇氣》（岸見一郎、古賀史健）<br>自我練習，不是專業心理諮詢</p>
+</div>
+<script>
+const KEY="vincent_dance_v1"; let D; try{D=JSON.parse(localStorage.getItem(KEY))||{};}catch(e){D={};}
+const $=id=>document.getElementById(id); let cur=1;
+function save(){try{localStorage.setItem(KEY,JSON.stringify(D));}catch(e){}}
+function draw(){
+  $("days").innerHTML=[1,2,3,4,5,6,7].map(d=>`<button data-d="${d}" class="${d===cur?"on":""}">第 ${d} 天${(D[d]||[]).some(x=>x&&x.trim())?" ✓":""}</button>`).join("");
+  $("dayt").textContent=`第 ${cur} 天`; [0,1,2].forEach(i=>$("t"+i).value=(D[cur]||[])[i]||"");
+  const done=[1,2,3,4,5,6,7].filter(d=>(D[d]||[]).some(x=>x&&x.trim())).length; $("prog").textContent=`已完成 ${done} / 7 天`+(done===7?"，你已經在跳舞了 ✨":"");
+}
+$("days").onclick=e=>{const b=e.target.closest("button"); if(!b)return; cur=+b.dataset.d; draw();};
+[0,1,2].forEach(i=>$("t"+i).oninput=e=>{D[cur]=D[cur]||["","",""]; D[cur][i]=e.target.value; save(); const done=[1,2,3,4,5,6,7].filter(d=>(D[d]||[]).some(x=>x&&x.trim())).length; $("prog").textContent=`已完成 ${done} / 7 天`;});
+[0,1,2].forEach(i=>$("t"+i).onblur=()=>draw());
+draw();
+</script>
+</body>
+</html>

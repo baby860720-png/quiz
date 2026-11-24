@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>大跌也不用賣的資金分配表｜Vincent 財商筆記</title>
+<meta name="description" content="輸入 4 個數字，算出哪些錢可以放股市、哪些錢絕對不能，下次大跌也不用被迫賣。">
+<meta property="og:title" content="大跌也不用賣的資金分配表">
+<meta property="og:description" content="4 個數字，算出你的錢怎麼分｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+.warn b{color:#a93226}
+.list li{margin:0 0 8px 20px;font-size:15.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜大跌也不用賣</div>
+      <h1>大跌也不用賣的<br><em>資金分配表</em></h1>
+      <p>一週跌 17%、一天又漲 3,300 點。砍在低點的人，很多不是看錯方向，而是那筆錢根本不該放股市。輸入 4 個數字，算出你的錢怎麼分。</p>
+      <div class="meta">4 個數字・約 2 分鐘・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">先看這張表：哪些錢不能放股市</div>
+      <ul class="list" style="margin-top:12px">
+        <li><b>生活費、房租、房貸月付</b>：每個月都要用，跌的時候也得照繳</li>
+        <li><b>緊急預備金</b>：失業、生病、修車，用的時候不會挑行情</li>
+        <li><b>3 年內確定要用的錢</b>：頭期款、學費、結婚基金</li>
+        <li><b>借來的錢</b>：利息固定要付，股價可不會配合你</li>
+      </ul>
+      <p class="small" style="font-size:14.5px;color:var(--dim)">扣掉這四種，剩下「短期用不到、跌了也不用賣」的錢，才適合放進波動大的投資。</p>
+    </div>
+
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label for="exp">每個月的固定支出</label>
+      <p class="hint">生活費＋房租或房貸＋保險＋其他固定要繳的</p>
+      <div class="inp"><input id="exp" inputmode="numeric" placeholder="例如 35000"><span>元／月</span></div>
+
+      <label>緊急預備金想留幾個月？</label>
+      <p class="hint">工作穩定可以少一點，收入不固定、家裡只有你一份收入就多留</p>
+      <div class="seg" id="months"><button data-v="3">3 個月</button><button data-v="6" class="on">6 個月</button><button data-v="12">12 個月</button></div>
+
+      <label for="short">3 年內確定要用的錢</label>
+      <p class="hint">頭期款、學費、結婚、換車……沒有就填 0</p>
+      <div class="inp"><input id="short" inputmode="numeric" placeholder="例如 300000"><span>元</span></div>
+
+      <label for="total">目前可以動用的總資金</label>
+      <p class="hint">存款＋已經在投資的部位，借來的錢不要算進來</p>
+      <div class="inp"><input id="total" inputmode="numeric" placeholder="例如 1500000"><span>元</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我的分配表</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的資金分配表</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bar" id="bar"></div>
+      <div class="bucket b1"><div class="bt"><span>① 緊急預備金</span><span class="amt" id="a1"></span></div><p id="p1"></p></div>
+      <div class="bucket b2"><div class="bt"><span>② 3 年內要用的錢</span><span class="amt" id="a2"></span></div><p>放在存款、定存這類隨時拿得出來、不會大起大落的地方。</p></div>
+      <div class="bucket b3"><div class="bt"><span>③ 可以承受波動的錢</span><span class="amt" id="a3"></span></div><p id="p3"></p></div>
+      <div id="warns"></div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">壓力測試</span>
+      <p class="rbody" style="margin-top:12px" id="stress"></p>
+      <div class="tip"><b>抱得住的關鍵：</b>跌的時候，你的生活費和 3 年內要用的錢都不在股市裡，所以你不用為了繳錢而賣。能不能等它回來，是你的選擇，不是被逼的。</div>
+    </div>
+
+    <div class="card cta">
+      <p>表算出來只是第一步。③ 那筆錢要怎麼放、要不要分批、哪些工具適合你的狀況，每個人都不一樣。想聊聊你的分配，直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">截圖你的分配表存起來，下次大跌拿出來看<br>本頁為一般理財觀念試算，不是投資建議；投資有風險，股市有漲有跌，過去走勢不代表未來</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => (n >= 10000 ? (Math.round(n / 1000) / 10).toLocaleString("zh-TW") + " 萬" : Math.round(n).toLocaleString("zh-TW")) + " 元";
+let months = 6;
+$("months").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; months = +b.dataset.v; [...$("months").children].forEach((x) => x.classList.toggle("on", x === b)); };
+["exp", "short", "total"].forEach((id) => $(id).addEventListener("input", (e) => {
+  const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : "";
+}));
+$("calc").onclick = () => {
+  const exp = num("exp"), short = num("short"), total = num("total");
+  if (!exp || !total) { alert("請至少填「每月固定支出」和「目前可以動用的總資金」"); return; }
+  const emer = exp * months;
+  const need = emer + short, invest = Math.max(total - need, 0);
+  const f1 = Math.min(emer, total), f2 = Math.min(short, Math.max(total - emer, 0));
+  $("a1").textContent = fmt(emer); $("a2").textContent = fmt(short); $("a3").textContent = fmt(invest);
+  $("p1").textContent = `每月支出 ${fmt(exp)} × ${months} 個月。放在活存或高利活存，要用的時候馬上拿得出來。`;
+  const pct = (x) => (total ? (x / total) * 100 : 0);
+  $("bar").innerHTML = `<i style="width:${pct(f1)}%;background:#b9ad95"></i><i style="width:${pct(f2)}%;background:#d9b878"></i><i style="width:${pct(invest)}%;background:var(--gold)"></i>`;
+  let w = "";
+  if (total < need) {
+    $("rtitle").innerHTML = "先把底子<br>補起來";
+    $("p3").textContent = "目前還沒有「跌了也不用賣」的錢。";
+    w += `<div class="warn"><b>還差 ${fmt(need - total)}</b>，① 和 ② 才補得滿。這個階段，先把預備金和短期要用的錢顧好，比急著進場重要。如果現在已經有股票，大跌時你很可能被迫賣出。</div>`;
+  } else {
+    $("rtitle").innerHTML = `大跌也不用賣的錢<br>最多 <em style="font-style:normal;color:#b07a1e">${fmt(invest)}</em>`;
+    $("p3").textContent = "短期用不到，跌了也不用急著賣。這筆錢才適合放進股票、ETF 這類波動大的投資，而且不一定要全部投入。";
+  }
+  $("warns").innerHTML = w;
+  $("stress").innerHTML = invest > 0
+    ? `假設 ③ 全部放股市，遇到像上週那樣跌 <b>17%</b>，帳面會少 <b>${fmt(invest * 0.17)}</b>；如果跌 <b>30%</b>，會少 <b>${fmt(invest * 0.3)}</b>。<br>先問自己：看到這個數字，我會不會睡不著、想全部賣掉？會的話，③ 不要全部投入，先放一部分就好。`
+    : `你目前還沒有可以承受波動的錢。這時候進股市，跌 17% 你可能就得賣，因為那是你的生活費或要用的錢。`;
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

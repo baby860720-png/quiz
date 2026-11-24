@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>3 分鐘負債壓力自我檢測｜Vincent 財商筆記</title>
+<meta name="description" content="輸入收入、支出、貸款，3 分鐘看出你的現金流在安全區還是危險區。">
+<meta property="og:title" content="3 分鐘負債壓力自我檢測">
+<meta property="og:description" content="4 個數字，算出你的錢怎麼分｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+.warn b{color:#a93226}
+.list li{margin:0 0 8px 20px;font-size:15.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜負債壓力自我檢測</div>
+      <h1>你的現金流<br><em>撐得住</em>嗎？</h1>
+      <p>43 萬人同時背著房貸和信貸。股價可以一週跌 17%，但每個月的利息和本金一塊都不會少。3 分鐘算出你在安全區還是危險區。</p>
+      <div class="meta">6 個數字・約 3 分鐘・不會收集你的資料</div>
+    </div>
+    <div class="card">
+      <div class="qno">開始檢測</div>
+      <label for="inc">每月穩定收入（稅後）</label>
+      <p class="hint">薪水等固定入帳的，獎金、投資收益先不算</p>
+      <div class="inp"><input id="inc" class="money" inputmode="numeric" placeholder="例如 60000"><span>元</span></div>
+
+      <label for="live">每月生活支出</label>
+      <p class="hint">吃住交通、保險、孝親等，不含貸款</p>
+      <div class="inp"><input id="live" class="money" inputmode="numeric" placeholder="例如 25000"><span>元</span></div>
+
+      <label for="mort">每月房貸月付</label>
+      <p class="hint">沒有就填 0</p>
+      <div class="inp"><input id="mort" class="money" inputmode="numeric" placeholder="例如 18000"><span>元</span></div>
+
+      <label for="cred">每月信貸、車貸、卡費分期</label>
+      
+      <div class="inp"><input id="cred" class="money" inputmode="numeric" placeholder="例如 8000"><span>元</span></div>
+
+      <label for="save">隨時拿得出來的存款</label>
+      <p class="hint">活存、定存，不含股票基金</p>
+      <div class="inp"><input id="save" class="money" inputmode="numeric" placeholder="例如 150000"><span>元</span></div>
+
+      <label for="loan">房貸＋信貸還沒還的本金</label>
+      <p class="hint">用來試算利率上升，不知道可以空著</p>
+      <div class="inp"><input id="loan" class="money" inputmode="numeric" placeholder="例如 8000000"><span>元</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">看我在哪一區</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的負債壓力檢測</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bucket" id="z1"><div class="bt"><span>① 負債佔收入</span><span class="amt" id="v1"></span></div><p id="p1"></p></div>
+      <div class="bucket" id="z2"><div class="bt"><span>② 收入停了能撐幾個月</span><span class="amt" id="v2"></span></div><p id="p2"></p></div>
+      <div class="bucket" id="z3"><div class="bt"><span>③ 每月還剩多少</span><span class="amt" id="v3"></span></div><p id="p3"></p></div>
+    </div>
+    <div class="card">
+      <span class="rtag">利率上升試算</span>
+      <p class="rbody" style="margin-top:12px" id="stress"></p>
+      <div class="tip"><b>槓桿放大的不只是報酬，</b>也放大了風險。借錢之前先確定：收入停了、利率升了、股市跌了，你都不用被迫賣。</div>
+    </div>
+    <div class="card cta">
+      <p>分數只是起點。負債怎麼排順序、要不要整合、哪些銀行條件比較好，每個人狀況都不一樣。想聊聊怎麼讓現金流喘口氣，直接私訊我，跟我說你在哪一區。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">截圖你的檢測結果存起來<br>本頁為一般理財觀念試算，不是貸款或投資建議；實際貸款條件依銀行審核為準</p>
+  </section>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => (n >= 10000 ? (Math.round(n / 1000) / 10).toLocaleString("zh-TW") + " 萬" : Math.round(n).toLocaleString("zh-TW")) + " 元";
+document.querySelectorAll("input.money").forEach((el) => el.addEventListener("input", (e) => { const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : ""; }));
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+function show() { $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0); }
+
+const Z = { g: ["#e8f3ea", "安全區"], y: ["#fbf0dc", "注意區"], r: ["#fdecea", "危險區"] };
+function zone(id, z) { $(id).style.background = Z[z][0]; return Z[z][1]; }
+$("calc").onclick = () => {
+  const inc = num("inc"), live = num("live"), mort = num("mort"), cred = num("cred"), save = num("save"), loan = num("loan");
+  if (!inc) { alert("請至少填「每月穩定收入」"); return; }
+  const debt = mort + cred, dti = debt / inc, months = (live + debt) ? save / (live + debt) : 99, left = inc - live - debt;
+  const z1 = dti < 0.3 ? "g" : dti < 0.5 ? "y" : "r", z2 = months >= 6 ? "g" : months >= 3 ? "y" : "r", z3 = left >= inc * 0.2 ? "g" : left >= 0 ? "y" : "r";
+  $("v1").textContent = Math.round(dti * 100) + "%"; $("p1").textContent = zone("z1", z1) + "：每月貸款 " + fmt(debt) + "。超過 3 成要注意，超過 5 成壓力很大。";
+  $("v2").textContent = (months >= 99 ? "很久" : months.toFixed(1) + " 個月"); $("p2").textContent = zone("z2", z2) + "：存款 ÷（生活支出＋貸款）。至少 6 個月比較安心。";
+  $("v3").textContent = fmt(Math.max(left, 0)) + (left < 0 ? "（不夠）" : ""); $("p3").textContent = zone("z3", z3) + (left < 0 ? "：每個月入不敷出，差 " + fmt(-left) + "。" : "：收入扣掉生活和貸款後剩下的錢。留到 2 成以上比較有彈性。");
+  const bad = [z1, z2, z3].filter((z) => z === "r").length, warn = [z1, z2, z3].filter((z) => z === "y").length;
+  const all = bad ? "危險區" : warn ? "注意區" : "安全區";
+  $("rtitle").innerHTML = `你目前在<br><em style="font-style:normal;color:${bad ? "#a93226" : warn ? "#b07a1e" : "#2e7d4f"}">${all}</em>`;
+  $("stress").innerHTML = loan ? `如果利率上升 <b>1%</b>，${fmt(loan)} 的貸款每個月利息大約多 <b>${fmt(loan * 0.01 / 12)}</b>，一年多 ${fmt(loan * 0.01)}。<br>多出來的這筆，你的現金流付得出來嗎？` : "沒填未還本金。可以填上試算：利率上升 1% 時，每個月利息會多多少。";
+  show();
+};
+</script>
+</body>
+</html>

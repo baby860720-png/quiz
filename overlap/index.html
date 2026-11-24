@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>持股重疊自我檢查表｜Vincent 財商筆記</title>
+<meta name="description" content="5 分鐘查出你的 ETF 和股票重疊了多少，押在台積電的比例有多高。">
+<meta property="og:title" content="持股重疊自我檢查表">
+<meta property="og:description" content="4 個數字，算出你的錢怎麼分｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.bar{display:flex;height:14px;border-radius:8px;overflow:hidden;margin:6px 0 16px}
+.bar i{display:block;height:100%}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+.warn b{color:#a93226}
+.list li{margin:0 0 8px 20px;font-size:15.5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜持股重疊自我檢查表</div>
+      <h1>你是不是也<br><em>重複押</em>同一檔？</h1>
+      <p>台積電一天就拉了台股約 1,587 點。0050 裡台積電接近 6 成，手上如果還有台積電、其他台股 ETF，可能早就押在同一個地方。5 分鐘自己查完。</p>
+      <div class="meta">填你手上的金額・約 5 分鐘・不會收集你的資料</div>
+    </div>
+    <div class="card">
+      <div class="qno">先自己檢查這 3 件事</div>
+      <ul class="list" style="margin-top:12px">
+        <li><b>攤開持股</b>：每一檔 ETF 都到投信官網看「前十大成分股」，同一檔股票出現幾次？</li>
+        <li><b>看產業和地區</b>：是不是全部都是台股、都是半導體或電子？</li>
+        <li><b>想清楚用途</b>：這筆錢多久會用到？短期要用的錢不該集中在一檔。</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="qno">算算你押在台積電多少</div>
+      <label for="a0050">0050、006208 這類市值型 ETF</label>
+      <p class="hint">兩檔追蹤同一個指數，台積電權重都接近 6 成（11/11 資料約 58.7%）</p>
+      <div class="inp"><input id="a0050" class="money" inputmode="numeric" placeholder="例如 300000"><span>元</span></div>
+
+      <label for="atsmc">直接持有的台積電股票</label>
+      
+      <div class="inp"><input id="atsmc" class="money" inputmode="numeric" placeholder="例如 100000"><span>元</span></div>
+
+      <label for="aetf">其他台股 ETF</label>
+      <p class="hint">高股息、主題型 ETF 等</p>
+      <div class="inp"><input id="aetf" class="money" inputmode="numeric" placeholder="例如 200000"><span>元</span></div>
+
+      <label for="wetf">上面那些 ETF 裡台積電的權重</label>
+      <p class="hint">到投信官網查，沒有持有台積電就填 0；不知道可以先空著</p>
+      <div class="inp"><input id="wetf" class="" inputmode="numeric" placeholder="例如 10"><span>%</span></div>
+
+      <label for="aother">其他投資（美股、債券、基金、存股以外的）</label>
+      
+      <div class="inp"><input id="aother" class="money" inputmode="numeric" placeholder="例如 200000"><span>元</span></div>
+
+      <label for="cash">存款、預備金</label>
+      
+      <div class="inp"><input id="cash" class="money" inputmode="numeric" placeholder="例如 300000"><span>元</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我的集中度</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的持股重疊檢查</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bucket b3"><div class="bt"><span>押在台積電的金額</span><span class="amt" id="t1"></span></div><p id="t1p"></p></div>
+      <div class="bucket b2"><div class="bt"><span>台股部位佔總資產</span><span class="amt" id="t2"></span></div><p id="t2p"></p></div>
+      <div id="warns"></div>
+    </div>
+    <div class="card">
+      <span class="rtag">壓力測試</span>
+      <p class="rbody" style="margin-top:12px" id="stress"></p>
+      <div class="tip"><b>分散不是買很多檔，</b>是同一件事發生時，不會全部一起跌。買 ETF 之前，先看它裡面裝了什麼。</div>
+    </div>
+    <div class="card cta">
+      <p>集中不一定是錯，重點是你知道自己押在哪、撐不撐得住。想聊聊你的配置要不要調整、可以怎麼分散，直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">截圖你的檢查結果存起來<br>本頁為一般理財觀念試算，不是投資建議；ETF 成分與權重會變動，以投信公告為準；投資有風險</p>
+  </section>
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => (n >= 10000 ? (Math.round(n / 1000) / 10).toLocaleString("zh-TW") + " 萬" : Math.round(n).toLocaleString("zh-TW")) + " 元";
+document.querySelectorAll("input.money").forEach((el) => el.addEventListener("input", (e) => { const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : ""; }));
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+function show() { $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0); }
+
+$("calc").onclick = () => {
+  const a50 = num("a0050"), ts = num("atsmc"), ae = num("aetf"), we = num("wetf") / 100, ao = num("aother"), cash = num("cash");
+  const total = a50 + ts + ae + ao + cash, tw = a50 + ts + ae;
+  if (!total) { alert("請至少填一個金額"); return; }
+  const expo = a50 * 0.587 + ts + ae * we, pInv = tw + ao ? expo / (tw + ao) : 0, pTot = expo / total, twp = tw / total;
+  $("t1").textContent = fmt(expo);
+  $("t1p").textContent = `佔你全部投資的 ${Math.round(pInv * 100)}%、佔總資產的 ${Math.round(pTot * 100)}%。` + (ae && !$("wetf").value ? "其他台股 ETF 的台積電權重沒填，實際可能更高。" : "");
+  $("t2").textContent = Math.round(twp * 100) + "%";
+  $("t2p").textContent = `台股相關部位 ${fmt(tw)}，佔總資產 ${Math.round(twp * 100)}%。`;
+  let lvl;
+  if (pInv >= 0.5) lvl = ["高度集中", "你的投資有一半以上，其實押在同一家公司。"];
+  else if (pInv >= 0.3) lvl = ["有點集中", "台積電佔你投資的三成以上，它一動，你的資產就跟著大動。"];
+  else lvl = ["還算分散", "台積電的比重不算太高，可以再看看產業和地區是否也有分散。"];
+  $("rtitle").innerHTML = `你的台積電集中度<br><em style="font-style:normal;color:#b07a1e">${lvl[0]}</em>`;
+  $("warns").innerHTML = `<div class="${pInv >= 0.3 ? "warn" : "tip"}">${lvl[1]}</div>`;
+  $("stress").innerHTML = `假設台積電跌 <b>20%</b>，光是這一檔，你的資產就會少 <b>${fmt(expo * 0.2)}</b>；跌 <b>30%</b> 會少 <b>${fmt(expo * 0.3)}</b>。<br>以上只算台積電本身，同產業的股票通常也會一起跌。`;
+  show();
+};
+</script>
+</body>
+</html>

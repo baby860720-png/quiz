@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>把藉口變成起點的 3 個練習｜Vincent 讀書筆記</title>
+<meta name="description" content="3 個練習問題，看看你把哪一段過去當成停在原地的理由。整理自《被討厭的勇氣》。">
+<meta property="og:title" content="別再怪過去：把藉口變成起點的 3 個練習">
+<meta property="og:description" content="3 個練習問題｜Vincent 讀書筆記：被討厭的勇氣">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+textarea{width:100%;min-height:96px;border:1px solid var(--line);border-radius:14px;background:var(--card2);padding:12px 14px;font-size:16px;font-family:var(--sans);color:var(--text);line-height:1.6;resize:vertical}
+textarea:focus{outline:none;border-color:var(--gold)}
+.hint{font-size:14px;color:var(--dim);margin:-8px 0 12px}
+.ans{background:var(--card2);border-radius:12px;padding:10px 14px;font-size:15px;margin:6px 0 14px;white-space:pre-wrap}
+.ans:empty::before{content:"（沒有寫，也沒關係）";color:var(--faint)}
+.lbl{font-size:13px;color:var(--gold);font-weight:700}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 讀書筆記｜被討厭的勇氣 1/5</div>
+      <h1>別再怪<em>過去</em><br>把藉口變成起點</h1>
+      <p>阿德勒說，很多時候不是過去困住我們，是我們為了不想改變，才把過去拿出來當理由。過去改不了，但怎麼用它，是你現在可以決定的。</p>
+      <div class="meta">3 個練習問題・約 3 分鐘・找個安靜的時間寫</div>
+    </div>
+    <button class="btn btn-gold" id="start">開始練習</button>
+    <p class="note">你寫的內容只存在你自己的手機，不會送出或被收集</p>
+  </section>
+
+  <section id="quiz" class="hide">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="card">
+      <div class="qno" id="qno"></div>
+      <div class="q" id="q"></div>
+      <p class="hint" id="hint"></p>
+      <div id="field"></div>
+    </div>
+    <button class="btn btn-gold" id="next">下一題</button>
+    <button class="btn btn-ghost hide" id="back">回上一題</button>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的練習紀錄</span>
+      <div class="rtitle">過去只是道具，<br>劇本一直在你手上</div>
+      <div class="lbl">我常拿來解釋的過去</div><div class="ans" id="a1"></div>
+      <div class="lbl">如果它沒發生，我會想做</div><div class="ans" id="a2"></div>
+      <div class="lbl">停在原地的好處</div><div class="ans" id="a3"></div>
+      <div class="tip" id="rtip"></div>
+    </div>
+    <div class="card">
+      <span class="rtag">接下來 7 天</span>
+      <p class="rbody" style="margin-top:12px">從第 2 題寫下的事情裡，挑一件<b>最小、這禮拜就做得到</b>的開始。不用一次改變人生，60 分進步到 61 分就算數。</p>
+    </div>
+    <div class="card cta">
+      <p>很多人卡住的不只是心態，錢的事也一樣：「以前沒人教我理財」「家裡本來就沒錢」。如果你也想把這些變成起點，可以直接私訊我聊聊。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新寫一次</button>
+    </div>
+    <p class="note">截圖你的練習紀錄存起來，7 天後再回來看看<br>內容整理自《被討厭的勇氣》（岸見一郎、古賀史健）<br>自我練習，不是專業心理諮詢</p>
+  </section>
+
+</div>
+<script>
+const QS = [
+  { q: "我最常拿來解釋「為什麼我做不到」的過去是什麼？", hint: "例如：家裡管太嚴、上一段感情受傷、小時候沒人教我理財", type: "text" },
+  { q: "如果這件事從來沒發生過，我現在會想做什麼？", hint: "想到什麼就寫什麼，不用合理", type: "text" },
+  { q: "老實說，停在原地，對我有什麼好處？", hint: "選最接近的一個，也可以自己補充", type: "pick",
+    options: ["不用冒險", "不用負責", "不用面對失敗", "不用讓別人失望"] }
+];
+const TIPS = {
+  "不用冒險": "<b>你在保護安全感。</b>這沒有錯，只是安全不等於不動。試試看把第一步縮到「就算失敗也不痛」的大小，風險小了，你就比較敢走。",
+  "不用負責": "<b>你在避開選擇的重量。</b>只要怪過去，結果就不是你的責任。但人生本來就是你的課題，自己選、自己扛，反而會比較踏實。",
+  "不用面對失敗": "<b>你在保護自尊。</b>不開始就不會失敗，但也不會進步。把目標從「做到最好」改成「先做出來」，失敗就只是過程，不是定義。",
+  "不用讓別人失望": "<b>你在活別人的期待。</b>別人怎麼看你，是別人的課題。你能決定的，只有自己要往哪裡走。",
+  "其他": "<b>能誠實寫下來，就已經往前一步了。</b>看見自己停在原地的理由，才有機會換一個新的選擇。"
+};
+const KEY = "vincent_past_v1";
+let A; try { A = JSON.parse(localStorage.getItem(KEY)) || ["", "", "", ""]; } catch (e) { A = ["", "", "", ""]; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(A)); } catch (e) {} }
+let i = 0;
+const $ = id => document.getElementById(id);
+function show(id) { ["intro", "quiz", "result"].forEach(s => $(s).classList.toggle("hide", s !== id)); window.scrollTo(0, 0); }
+function render() {
+  const Q = QS[i];
+  $("bar").style.width = ((i + 1) / QS.length * 100) + "%";
+  $("qno").textContent = `第 ${i + 1} 題 / ${QS.length}`;
+  $("q").textContent = Q.q; $("hint").textContent = Q.hint;
+  $("back").classList.toggle("hide", i === 0);
+  $("next").textContent = i === QS.length - 1 ? "看我的練習紀錄" : "下一題";
+  const f = $("field"); f.innerHTML = "";
+  if (Q.type === "text") {
+    const t = document.createElement("textarea"); t.value = A[i]; t.placeholder = "寫在這裡…";
+    t.oninput = () => { A[i] = t.value; save(); }; f.appendChild(t);
+  } else {
+    Q.options.forEach(o => {
+      const b = document.createElement("button"); b.className = "opt" + (A[2] === o ? " on" : ""); b.textContent = o;
+      b.onclick = () => { A[2] = o; save(); render(); }; f.appendChild(b);
+    });
+    const t = document.createElement("textarea"); t.value = A[3]; t.placeholder = "想補充的話寫這裡（可以不寫）"; t.style.minHeight = "70px";
+    t.oninput = () => { A[3] = t.value; save(); }; f.appendChild(t);
+  }
+}
+function result() {
+  $("a1").textContent = A[0].trim(); $("a2").textContent = A[1].trim();
+  $("a3").textContent = [A[2], A[3].trim()].filter(Boolean).join("：");
+  $("rtip").innerHTML = TIPS[A[2]] || TIPS["其他"];
+  show("result");
+}
+$("start").onclick = () => { i = 0; show("quiz"); render(); };
+$("next").onclick = () => { if (i < QS.length - 1) { i++; render(); window.scrollTo(0, 0); } else result(); };
+$("back").onclick = () => { if (i > 0) { i--; render(); } };
+$("again").onclick = () => { A = ["", "", "", ""]; save(); i = 0; show("quiz"); render(); };
+</script>
+</body>
+</html>

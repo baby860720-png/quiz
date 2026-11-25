@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>普發1萬資格比較表｜Vincent 財商筆記</title>
+<meta name="description" content="點選你的身分，馬上知道能不能領普發1萬、哪種領法最快、要準備什麼、期限到什麼時候。">
+<meta property="og:title" content="普發1萬資格比較表">
+<meta property="og:description" content="能不能領、什麼時候領、怎麼領最快｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:18px 0 8px}
+label:first-of-type{margin-top:4px}
+.pick{display:grid;gap:8px}
+.pick button{text-align:left;border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:12px 14px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer;line-height:1.5}
+.pick button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+table{width:100%;border-collapse:collapse;font-size:14px;margin-top:10px}
+th,td{border-bottom:1px solid var(--line);padding:9px 6px;text-align:left;vertical-align:top}
+th{color:var(--dim);font-weight:500;font-size:13px}
+td b{color:#8a5a12}
+.ok{color:#2e7d32;font-weight:700}.no{color:#a93226;font-weight:700}
+.box{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line);background:#f8f1e3}
+.box h3{font-size:15px;margin-bottom:4px}
+.box p,.box li{font-size:14.5px;color:var(--text)}
+.box li{margin:0 0 4px 18px}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:14.5px;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜普發現金</div>
+      <h1>普發1萬<br><em>資格比較表</em></h1>
+      <p>點選你的身分，馬上知道：能不能領、哪種領法最快、要準備什麼、期限到什麼時候。</p>
+      <div class="meta">2 個問題・30 秒・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">快速檢查</div>
+      <label>1. 你的身分是？</label>
+      <div class="pick" id="who">
+        <button data-v="citizen">在台灣有戶籍的國民</button>
+        <button data-v="nohh">沒有戶籍、但有居留許可的國民</button>
+        <button data-v="spouse">外籍、大陸或港澳配偶（嫁娶台灣人，有居留許可）</button>
+        <button data-v="pr">有永久居留許可的外國人</button>
+        <button data-v="abroad">政府派駐國外的人員或眷屬</button>
+        <button data-v="other">其他外國人（工作、留學等一般居留）</button>
+      </div>
+
+      <label>2. 要領的人是？</label>
+      <div class="pick" id="age">
+        <button data-v="adult">13 歲以上，自己領</button>
+        <button data-v="kid">未滿 13 歲的孩子（爸媽代領）</button>
+        <button data-v="baby">還沒出生，2027 年底前會出生</button>
+        <button data-v="senior">家裡長輩（不太會用網路）</button>
+      </div>
+
+      <button class="btn btn-gold" id="go" style="margin-top:20px">看我的結果</button>
+    </div>
+
+    <div class="card">
+      <div class="qno">資格比較表</div>
+      <table>
+        <tr><th>身分</th><th>能不能領</th></tr>
+        <tr><td>有戶籍的國民</td><td class="ok">可以</td></tr>
+        <tr><td>無戶籍、有居留許可的國民</td><td class="ok">可以</td></tr>
+        <tr><td>外籍、陸港澳配偶（有居留許可）</td><td class="ok">可以</td></tr>
+        <tr><td>永久居留的外國人</td><td class="ok">可以</td></tr>
+        <tr><td>政府派駐國外人員與眷屬</td><td class="ok">可以</td></tr>
+        <tr><td>2027 年底前出生的新生兒</td><td class="ok">可以</td></tr>
+        <tr><td>一般居留的外國人（非國人配偶）</td><td class="no">目前規劃不在名單</td></tr>
+      </table>
+      <p class="small" style="font-size:13.5px;color:var(--dim);margin-top:8px">目前沒有排富，收入高低都能領。以上為財政部初步規劃，比照過去普發做法，最終以政府正式公告為準。</p>
+    </div>
+
+    <div class="card">
+      <div class="qno">5 種領法比較</div>
+      <table>
+        <tr><th>領法</th><th>最快</th><th>適合誰</th></tr>
+        <tr><td><b>登記入帳</b></td><td>1/25 登記</td><td>有銀行帳戶、想最快到帳</td></tr>
+        <tr><td><b>直接入帳</b></td><td>1/26</td><td>領勞保年金、老年年金等，免登記</td></tr>
+        <tr><td><b>ATM 領現</b></td><td>2/15</td><td>不想填帳號；帶提款卡、身分證、健保卡</td></tr>
+        <tr><td><b>郵局臨櫃</b></td><td>2/22</td><td>長輩、不熟網路；全台 1,277 個支局</td></tr>
+        <tr><td><b>造冊發放</b></td><td>1/26 起</td><td>收容人、特定偏鄉</td></tr>
+      </table>
+      <p class="small" style="font-size:13.5px;color:var(--dim);margin-top:8px">所有日期的前提：明年度總預算 1/5 前三讀、1/20 前公布。延後的話，日期跟著延後。</p>
+    </div>
+    <p class="note">本頁不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的結果</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div id="rbody"></div>
+      <div class="warn"><b>現在還沒開放登記。</b>官方網址一定有「.gov.tw」，正式通知不會叫你馬上點連結、也不會要帳號密碼。有疑問打 165。</div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">那普發 2 萬呢？</span>
+      <p class="rbody" style="margin-top:12px">11/20 特別條例三讀，還要等條例生效、行政院送特別預算、預算通過後 3 個月內發完。發放日、登記方式、資格細節都還沒公布，能不能 1 萬、2 萬都拿到，也要看後續。</p>
+    </div>
+
+    <div class="card cta">
+      <p>領到之前，可以先想好這筆錢的工作：先補預備金、再還高利負債、最後才放長期。用 3 個數字就能算出你的普發該先放哪。</p>
+      <a class="btn btn-gold" href="../cash/">算算我的普發怎麼分</a>
+      <a class="btn btn-ghost" href="https://ig.me/m/vincent781022">有問題，私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新檢查</button>
+    </div>
+    <p class="note">資料整理至 2026/11/25，為財政部初步規劃，發放金額、日期與資格以政府正式公告為準。</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+let who = "", age = "";
+const bind = (id, set) => $(id).onclick = (e) => { const b = e.target.closest("button"); if (!b) return; set(b.dataset.v); [...$(id).children].forEach((x) => x.classList.toggle("on", x === b)); };
+bind("who", (v) => who = v); bind("age", (v) => age = v);
+const box = (h, items) => `<div class="box"><h3>${h}</h3><ul>${items.map((i) => `<li>${i}</li>`).join("")}</ul></div>`;
+$("go").onclick = () => {
+  if (!who || !age) { alert("請先選好兩個問題"); return; }
+  let html = "";
+  if (who === "other") {
+    $("rtitle").innerHTML = "目前規劃<br>不在名單裡";
+    html = box("為什麼", ["財政部規劃的外國人資格，是永久居留，或是國人的配偶且有居留許可", "一般工作、留學居留目前不在名單，最終以正式公告為準"]);
+  } else {
+    $("rtitle").innerHTML = age === "baby" ? "寶寶<br>也可以領" : "你<br>可以領";
+    const way = {
+      adult: ["<b>想最快</b>：1/25 起上官方網站登記帳戶，1/26 起分批入帳", "<b>不想填帳號</b>：2/15 起到指定 ATM，帶提款卡、身分證、健保卡", "<b>如果你有領勞保年金、老年年金等</b>：可能免登記直接入帳，看正式名單"],
+      kid: ["由爸媽或監護人<b>其中一人</b>代領", "要準備<b>孩子的健保卡號</b>", "可以跟爸媽自己的一起登記入帳，最快 1/26"],
+      baby: ["2027 年 12/31 前出生的新生兒都能領", "期限比一般人長，到 <b>2028/1/31</b>", "出生後由爸媽代領，記得先辦好健保卡"],
+      senior: ["<b>最簡單</b>：2/22 起到郵局臨櫃，帶有照片的健保卡（沒照片要加帶身分證）", "郵局第一週可能依身分證末碼分流，避開人潮", "如果有領勞保年金、老年年金，可能<b>免登記直接入帳</b>，先確認名單"],
+    }[age];
+    const extra = who === "abroad" ? ["派駐國外人員與眷屬的領取方式，請留意主管機關另外的說明"] : who === "spouse" || who === "pr" || who === "nohh" ? ["用<b>居留證號</b>登記或領取"] : [];
+    html = box("怎麼領最快", way.concat(extra)) + box("期限", [age === "baby" ? "新生兒到 2028/1/31" : "一般民眾到 <b>2027/8/31</b>，過了就領不到"]);
+  }
+  $("rbody").innerHTML = html;
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

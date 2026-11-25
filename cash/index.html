@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>普發3萬分配試算｜Vincent 財商筆記</title>
+<meta name="description" content="普發 1 萬、2 萬進度整理，加上 3 個數字算出這筆錢該先補預備金、先還債，還是放長期。">
+<meta property="og:title" content="普發3萬分配試算">
+<meta property="og:description" content="進度一次看懂＋3 個數字算出你的錢先放哪｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.tl li{margin:0 0 8px 20px;font-size:15.5px}
+.tl b{color:#8a5a12}
+.bucket{border-radius:14px;padding:14px 16px;margin-bottom:10px;border:1px solid var(--line)}
+.bucket .bt{display:flex;justify-content:space-between;align-items:baseline;gap:10px;font-weight:700}
+.bucket .amt{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.bucket p{font-size:14.5px;color:var(--dim);margin-top:4px}
+.b1{background:#f3efe6}.b2{background:#f8f1e3}.b3{background:#fbf0dc;border-color:var(--gold)}
+.warn{background:#fdecea;border-left:4px solid #c0392b;border-radius:10px;padding:12px 14px;font-size:15px;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜普發現金</div>
+      <h1>普發3萬<br><em>分配試算</em></h1>
+      <p>先看懂 1 萬、2 萬各走到哪，再用 3 個數字算出：這筆錢該先補預備金、先還債，還是放長期。</p>
+      <div class="meta">3 個數字・約 1 分鐘・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">進度整理（11/25）</div>
+      <ul class="tl" style="margin-top:12px">
+        <li><b>1 萬｜明年度總預算</b>：如果總預算 1/5 前三讀、1/20 前公布，預計 1/25 開放登記、1/26 第一批入帳、2/15 ATM 領現、2/22 郵局領現。</li>
+        <li><b>2 萬｜特別條例</b>：11/20 三讀，還要等條例生效、行政院送特別預算、預算通過後 3 個月內發完。發放日和登記方式都還沒公布。</li>
+        <li><b>兩筆能不能都拿到</b>：各走各的程序，金額和日期以政府正式公告為準。</li>
+      </ul>
+      <p class="small" style="font-size:14.5px;color:#a93226;margin-top:6px">目前都還沒開放登記。收到「點連結登記領普發」的簡訊或私訊，都不要點。</p>
+    </div>
+
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label>你想試算多少？</label>
+      <div class="seg" id="amt"><button data-v="10000">1 萬</button><button data-v="20000">2 萬</button><button data-v="30000" class="on">3 萬</button></div>
+
+      <label for="exp">每個月的固定支出</label>
+      <p class="hint">生活費＋房租或房貸＋保險＋其他固定要繳的</p>
+      <div class="inp"><input id="exp" inputmode="numeric" placeholder="例如 35000"><span>元／月</span></div>
+
+      <label for="save">現在隨時拿得出來的存款</label>
+      <p class="hint">活存、定存這類，股票基金不算</p>
+      <div class="inp"><input id="save" inputmode="numeric" placeholder="例如 60000"><span>元</span></div>
+
+      <label for="debt">卡債、信貸、分期還沒還的金額</label>
+      <p class="hint">利率比較高的負債。房貸不用算，沒有就填 0</p>
+      <div class="inp"><input id="debt" inputmode="numeric" placeholder="例如 0"><span>元</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我的分配</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的普發分配</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="bucket b1"><div class="bt"><span>① 先補預備金</span><span class="amt" id="a1"></span></div><p id="p1"></p></div>
+      <div class="bucket b2"><div class="bt"><span>② 再還高利負債</span><span class="amt" id="a2"></span></div><p id="p2"></p></div>
+      <div class="bucket b3"><div class="bt"><span>③ 最後才放長期</span><span class="amt" id="a3"></span></div><p id="p3"></p></div>
+      <div id="warns"></div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">為什麼是這個順序</span>
+      <p class="rbody" style="margin-top:12px">預備金是保險：沒有它，一次臨時支出就可能要刷卡或借錢。高利負債是漏洞：卡債循環利率最高可到 15%，先還掉等於每年少付這些利息。前兩個顧好，長期投資遇到波動時，才不會被迫在低點賣。</p>
+    </div>
+
+    <div class="card cta">
+      <p>算出來 ③ 有錢、或你想知道預備金之外的錢怎麼安排比較適合自己？直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">本頁為一般理財觀念試算，不是投資建議；投資有風險，價格有漲有跌。普發金額與日期以政府正式公告為準。</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => Math.round(n).toLocaleString("zh-TW") + " 元";
+let amt = 30000;
+$("amt").onclick = (e) => { const b = e.target.closest("button"); if (!b) return; amt = +b.dataset.v; [...$("amt").children].forEach((x) => x.classList.toggle("on", x === b)); };
+["exp", "save", "debt"].forEach((id) => $(id).addEventListener("input", (e) => {
+  const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : "";
+}));
+$("calc").onclick = () => {
+  const exp = num("exp"), save = num("save"), debt = num("debt");
+  if (!exp) { alert("請先填「每個月的固定支出」"); return; }
+  const target = exp * 3, gap = Math.max(target - save, 0);
+  const x1 = Math.min(gap, amt), x2 = Math.min(debt, amt - x1), x3 = amt - x1 - x2;
+  $("a1").textContent = fmt(x1); $("a2").textContent = fmt(x2); $("a3").textContent = fmt(x3);
+  const months = (save / exp).toFixed(1);
+  $("p1").textContent = gap > 0
+    ? `你的存款大約是 ${months} 個月的支出，建議至少留 3 個月（${fmt(target)}），還差 ${fmt(gap)}。`
+    : `存款已經有 ${months} 個月的支出，預備金及格，這一層不用再放。`;
+  $("p2").textContent = debt > 0
+    ? (x2 === 0 ? `這次的錢都先補預備金，${fmt(debt)} 的負債要另外規劃還款。` : x2 < debt ? `先拿去還，剩下 ${fmt(debt - x2)} 還要另外規劃。` : "高利負債可以一次還清。")
+    : "沒有高利負債，這一層跳過。";
+  $("p3").textContent = x3 > 0
+    ? "前兩層都顧好了，這筆錢才適合放進長期、可以承受波動的地方，不一定要一次全部投入。"
+    : "這次的錢在前兩層就用完了，這是對的順序。";
+  $("rtitle").innerHTML = x3 > 0 ? "前兩層顧好了<br>可以想長期" : (x1 > 0 ? "先把底子<br>補起來" : "先把利息<br>最高的還掉");
+  $("warns").innerHTML = (gap > amt) ? `<div class="warn">就算全部放進預備金，還差 ${fmt(gap - amt)} 才到 3 個月。普發只是開始，每月固定存一點更重要。</div>` : "";
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

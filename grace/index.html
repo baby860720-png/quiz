@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>寬限期到期試算｜Vincent 財商筆記</title>
+<meta name="description" content="輸入貸款條件，算出寬限期到期後月付會變多少、要多準備多少錢。">
+<meta property="og:title" content="寬限期到期試算">
+<meta property="og:description" content="寬限期結束後，你的房貸月付會變多少？｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row b{font-family:var(--serif);font-size:20px;white-space:nowrap}
+.jump{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px;text-align:center;margin:14px 0 6px}
+.jump .box{border:1px solid var(--line);border-radius:14px;padding:12px 6px;background:var(--card2)}
+.jump .box small{display:block;font-size:12.5px;color:var(--dim);margin-bottom:4px}
+.jump .box b{font-family:var(--serif);font-size:22px;white-space:nowrap}
+.jump .box.after{border-color:#c0392b;background:#fdecea}
+.jump .arrow{font-size:22px;color:var(--dim)}
+.lv{border-radius:14px;padding:14px 16px;margin:12px 0;font-size:15px}
+.g{background:#e8f3ea;border-left:4px solid #2e7d32}.y{background:#fbf0dc;border-left:4px solid #b07a1e}.r{background:#fdecea;border-left:4px solid #c0392b}
+.list li{margin:0 0 8px 20px;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜房貸</div>
+      <h1>寬限期<br><em>到期試算</em></h1>
+      <p>寬限期只繳利息很輕鬆，但到期那個月，月付可能直接翻倍。輸入你的貸款條件，先算清楚到期後要繳多少、現在該準備多少。</p>
+      <div class="meta">約 1 分鐘・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label for="loan">貸款金額</label>
+      <p class="hint">寬限期間只繳利息，本金不會減少，填當初貸的金額就好</p>
+      <div class="inp"><input id="loan" inputmode="numeric" placeholder="例如 8400000"><span>元</span></div>
+
+      <label for="rate">年利率</label>
+      <div class="inp"><input id="rate" inputmode="decimal" value="2.4"><span>%</span></div>
+
+      <label>貸款總年限（含寬限期）</label>
+      <div class="seg" id="yrs"><button data-v="20">20 年</button><button data-v="30" class="on">30 年</button><button data-v="35">35 年</button><button data-v="40">40 年</button></div>
+
+      <label>寬限期長度</label>
+      <div class="seg" id="grace"><button data-v="1">1 年</button><button data-v="2">2 年</button><button data-v="3" class="on">3 年</button><button data-v="5">5 年</button></div>
+
+      <label for="left">寬限期還剩幾個月（選填）</label>
+      <p class="hint">還沒開始繳或不確定就空白，會用整段寬限期來算</p>
+      <div class="inp"><input id="left" inputmode="numeric" placeholder="例如 12"><span>個月</span></div>
+
+      <label for="budget">每個月最多能繳多少房貸（選填）</label>
+      <p class="hint">扣掉生活費、保險、孝親後，真的拿得出來的金額</p>
+      <div class="inp"><input id="budget" inputmode="numeric" placeholder="例如 30000"><span>元／月</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出到期後的月付</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">寬限期到期後</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div class="jump">
+        <div class="box"><small>寬限期（只繳息）</small><b id="now"></b></div>
+        <div class="arrow">→</div>
+        <div class="box after"><small id="afterLabel">到期後</small><b id="after"></b></div>
+      </div>
+      <div class="row"><span>每個月多繳</span><b id="diff"></b></div>
+      <div class="row"><span>跟一開始就還本金比，利息多付</span><b id="extra"></b></div>
+      <div id="lv"></div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">到期前可以先做的事</span>
+      <ul class="list" style="margin-top:12px" id="todo"></ul>
+    </div>
+
+    <div class="card cta">
+      <p>到期後的數字算出來了，下一步是看你的狀況適合怎麼接。想聊聊，直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">本頁為一般理財觀念試算，以本息平均攤還、利率不變估算，未計手續費與保險，實際以銀行核貸條件為準。利率可能變動；轉貸、展延、延長年限等方案需經銀行審核，可能有相關費用。</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => Math.round(n).toLocaleString("zh-TW") + " 元";
+const wan = (n) => n >= 10000 ? (Math.round(n / 1000) / 10).toLocaleString("zh-TW") + " 萬" : fmt(n);
+const pmt = (P, a, n) => { const r = a / 12; return r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n)); };
+let yrs = 30, grace = 3;
+const seg = (id, set) => $(id).onclick = (e) => { const b = e.target.closest("button"); if (!b) return; set(+b.dataset.v); [...$(id).children].forEach((x) => x.classList.toggle("on", x === b)); };
+seg("yrs", (v) => yrs = v); seg("grace", (v) => grace = v);
+["loan", "left", "budget"].forEach((id) => $(id).addEventListener("input", (e) => {
+  const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : "";
+}));
+$("calc").onclick = () => {
+  const P = num("loan"), rate = num("rate") / 100, budget = num("budget");
+  if (!P) { alert("請填「貸款金額」"); return; }
+  if (grace >= yrs) { alert("寬限期要比貸款年限短"); return; }
+  const n = yrs * 12, g = grace * 12;
+  const left = Math.min(num("left") || g, g);
+  const now = P * rate / 12, after = pmt(P, rate, n - g), full = pmt(P, rate, n);
+  const diff = after - now;
+  const extra = (now * g + after * (n - g)) - full * n;
+  $("now").textContent = wan(now); $("after").textContent = wan(after);
+  $("afterLabel").textContent = `第 ${grace + 1} 年起`;
+  $("diff").textContent = fmt(diff); $("extra").textContent = "約 " + wan(Math.max(0, extra));
+  $("rtitle").innerHTML = after / now >= 1.95 ? `月付會變<br>${(after / now).toFixed(1)} 倍` : `月付會多<br>${wan(diff)}`;
+  let cls, msg;
+  if (budget) {
+    if (after > budget) { cls = "r"; msg = `到期後月付 ${fmt(after)}，超出你的預算 ${fmt(after - budget)}。建議現在就開始準備，並提早跟銀行確認到期金額和可行做法。`; }
+    else if (after > budget * 0.9) { cls = "y"; msg = `到期後月付在預算內，但只剩 ${fmt(budget - after)} 的空間，利率一有變化就會很緊。`; }
+    else { cls = "g"; msg = `到期後月付在預算內，還有 ${fmt(budget - after)} 的空間。可以照下面的方法，把寬限期少繳的錢先存起來。`; }
+  } else { cls = "y"; msg = "沒有填預算的話，先問自己：每個月多繳 " + fmt(diff) + "，生活撐得住嗎？"; }
+  $("lv").innerHTML = `<div class="lv ${cls}">${msg}</div>`;
+  const save = diff * left;
+  $("todo").innerHTML = [
+    `<b>照到期後的月付過日子</b>：寬限期間每個月照 ${fmt(after)} 準備，多出來的 ${fmt(diff)} 存起來。${left} 個月後大約多 ${wan(save)} 緩衝，也先確認自己繳得起。`,
+    `<b>提早跟銀行確認</b>：到期日、到期後的月付金額，以及有哪些做法、各有什麼條件和費用。`,
+    `<b>留預備金</b>：至少留幾個月的房貸＋生活費，收入有變化時才有時間調整。`,
+  ].map((x) => `<li>${x}</li>`).join("");
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

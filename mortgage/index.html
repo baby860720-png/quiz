@@ -133,7 +133,11 @@ $("calc").onclick = () => {
   $("months").textContent = burn > 0 ? (cash / burn).toFixed(1) + " 個月" : "—";
   const bad = (grace ? (after / inc) : ratio);
   let cls, title, msg;
-  if (left < 0 || bad >= 0.5) { cls = "r"; title = "紅燈<br>壓力很大"; msg = "繳完房貸和生活費已經不夠用，或房貸會吃掉一半以上的收入。這種狀況任何一個意外都很難撐，建議先調整總價、貸款條件或購屋時間。"; }
+  const why = [];
+  if (left < 0) why.push("繳完房貸和生活費已經不夠用");
+  if (bad >= 0.5) why.push(grace ? `寬限期結束後，房貸會吃掉 ${Math.round(bad * 100)}% 的收入` : `房貸吃掉 ${Math.round(bad * 100)}% 的收入`);
+  if (bad >= 0.4 && bad < 0.5 && cash < burn * 3) why.push(`房貸佔收入 ${Math.round(bad * 100)}%，存款卻撐不到 3 個月`);
+  if (why.length) { cls = "r"; title = "紅燈<br>壓力很大"; msg = why.join("；") + "。這種狀況任何一個意外都很難撐，建議簽約前先調整總價、貸款條件或購屋時間。"; }
   else if (bad >= 0.35 || cash < burn * 6) { cls = "y"; title = "黃燈<br>撐得住但很緊"; msg = cash < burn * 6 ? `日子過得去，但存款不到 6 個月的房貸＋生活費（${fmt(burn * 6)}），遇到收入中斷會很吃緊。` : "房貸佔收入超過三成五，每月可以存的錢不多，利率或收入一有變化就會有感。"; }
   else { cls = "g"; title = "綠燈<br>還有餘裕"; msg = "房貸比例和預備金都在比較安全的範圍。下一步可以比較銀行條件，看能不能再省一點利息。"; }
   $("rtitle").innerHTML = title;
@@ -141,7 +145,7 @@ $("calc").onclick = () => {
   const up = grace ? pmt(loan, rate + 0.005, n - g) : pmt(loan, rate + 0.005, n);
   const items = [
     `<b>3 個月沒收入</b>：房貸＋生活費要 ${fmt(burn * 3)}，你的存款${cash >= burn * 3 ? "撐得住" : `還差 ${fmt(burn * 3 - cash)}`}。`,
-    `<b>利率多 0.5 個百分點</b>：${grace ? "寬限期結束後" : ""}每月約 ${fmt(up)}，比現在${grace ? "攤還月付" : ""}多 ${fmt(up - (grace ? after : full))}。`,
+    `<b>利率多 0.5 個百分點</b>：${grace ? "寬限期結束後" : ""}每月約 ${fmt(up)}，比原本${grace ? "寬限期後的月付" : ""}多 ${fmt(up - (grace ? after : full))}。`,
   ];
   if (grace) items.push(`<b>寬限期結束後</b>：第 ${grace + 1} 年起月付從 ${fmt(now)} 變成約 ${fmt(after)}，到時候每月剩 ${fmt(inc - live - after)}。`);
   $("stress").innerHTML = items.map((i) => `<li>${i}</li>`).join("");

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>匯率影響自我檢查表｜Vincent 財商筆記</title>
+<meta name="description" content="盤點你接下來的外幣支出，算出台幣再貶 5%、10% 時要多留多少預算。">
+<meta property="og:title" content="匯率影響自我檢查表">
+<meta property="og:description" content="你的錢會不會被匯率吃掉？盤點外幣支出算給你看｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+.hint{font-size:13.5px;color:var(--dim);line-height:1.6}
+.ex{border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-top:12px;background:var(--card2)}
+.ex .t{font-weight:700;font-size:15px;margin-bottom:8px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.grid label{font-size:13px;color:var(--dim);display:block;margin-bottom:4px}
+.grid input,.grid select{width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;padding:10px 12px;font-size:16px;font-family:var(--sans);color:var(--text)}
+.full{grid-column:1/3}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row b{font-family:var(--serif);font-size:19px;white-space:nowrap}
+.list li{margin:0 0 8px 20px;font-size:15px}
+.big{background:#fbf0dc;border:1px solid var(--gold);border-radius:14px;padding:14px 16px;margin:12px 0}
+.big b{font-family:var(--serif);font-size:24px;color:#8a5a12}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜匯率</div>
+      <h1>匯率影響<br><em>自我檢查表</em></h1>
+      <p>台幣變薄，不是每個人都一樣痛。先盤點你接下來要用外幣付的錢，算出台幣再貶 5%、10% 時，要多留多少預算。</p>
+      <div class="meta">約 2 分鐘・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">先問自己 3 個問題</div>
+      <ul class="list" style="margin-top:12px">
+        <li>接下來一年，有沒有要用外幣付的錢？（出國、留學、海外網購、外幣保單）</li>
+        <li>這筆錢什麼時候要付？</li>
+        <li>如果匯率往不利的方向走，預算還差多少？</li>
+      </ul>
+      <p class="hint">沒有外幣支出的人，匯率對你的影響主要是物價，不用急著換匯。</p>
+    </div>
+
+    <div class="card">
+      <div class="qno">填入你的外幣支出（最多 3 筆）</div>
+      <p class="hint" style="margin-top:8px">匯率請填銀行的「賣出」牌告匯率。美元預設 33.1，是 11/25 收盤附近的參考值。</p>
+      <div id="rows"></div>
+      <button class="btn btn-gold" id="calc" style="margin-top:18px">算出要多留多少</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的匯率壓力</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div id="list"></div>
+      <div class="big">台幣再貶 5%，要多留 <b id="x5"></b><br>台幣再貶 10%，要多留 <b id="x10"></b></div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">接下來可以怎麼做</span>
+      <ul class="list" style="margin-top:12px">
+        <li><b>近期一定要付的</b>：先把匯率波動的差額算進預算，不要等到要付才發現不夠</li>
+        <li><b>分批準備</b>：時間還長的支出，可以分幾次換，不用賭一個點</li>
+        <li><b>沒有外幣支出</b>：不用為了匯率急著換美金，匯率也會漲會跌</li>
+        <li><b>長期資產</b>：全部放在單一貨幣、單一市場，風險比較集中，可以想想怎麼分散</li>
+      </ul>
+    </div>
+
+    <div class="card cta">
+      <p>想知道你的存款、投資怎麼配置，才不會被匯率和股市一起晃到？直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">本頁為一般理財觀念試算，未計換匯手續費與價差，不是換匯或投資建議。匯率有漲有跌，過去走勢不代表未來。</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const CUR = { USD: ["美元", "33.1"], JPY: ["日圓", ""], EUR: ["歐元", ""], OTHER: ["其他", ""] };
+const PRE = [["", "USD", ""], ["", "JPY", ""], ["", "USD", ""]];
+$("rows").innerHTML = PRE.map((p, i) => `
+  <div class="ex"><div class="t">第 ${i + 1} 筆</div><div class="grid">
+    <div class="full"><label>這是什麼支出</label><input id="n${i}" placeholder="${["例如 明年的美國旅行", "例如 日本旅遊", "例如 海外網購、訂閱"][i]}" value="${p[0]}"></div>
+    <div><label>幣別</label><select id="c${i}">${Object.entries(CUR).map(([k, v]) => `<option value="${k}"${k === p[1] ? " selected" : ""}>${v[0]}</option>`).join("")}</select></div>
+    <div><label>外幣金額</label><input id="a${i}" inputmode="decimal" placeholder="例如 1000" value="${p[2]}"></div>
+    <div class="full"><label>1 單位外幣＝多少台幣</label><input id="r${i}" inputmode="decimal" placeholder="${p[1] === "JPY" ? "請查銀行牌告，例如 0.2" : "請查銀行牌告"}" value="${CUR[p[1]][1]}"></div>
+  </div></div>`).join("");
+[0, 1, 2].forEach((i) => $(`c${i}`).onchange = (e) => { if (!$(`r${i}`).value || $(`r${i}`).dataset.auto) { $(`r${i}`).value = CUR[e.target.value][1]; $(`r${i}`).dataset.auto = 1; } });
+const v = (id) => { const x = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(x) ? 0 : x; };
+const fmt = (n) => Math.round(n).toLocaleString("zh-TW") + " 元";
+$("calc").onclick = () => {
+  let total = 0, html = "", miss = false;
+  [0, 1, 2].forEach((i) => {
+    const a = v(`a${i}`), r = v(`r${i}`); if (!a) return;
+    if (!r) { miss = true; return; }
+    const twd = a * r; total += twd;
+    html += `<div class="row"><span>${$(`n${i}`).value || `第 ${i + 1} 筆`}</span><b>${fmt(twd)}</b></div>`;
+  });
+  if (miss) { alert("有一筆沒有填匯率，請查銀行牌告後填入"); return; }
+  if (!total) { alert("請至少填一筆外幣支出"); return; }
+  $("list").innerHTML = html + `<div class="row"><span>現在換算台幣合計</span><b>${fmt(total)}</b></div>`;
+  $("x5").textContent = fmt(total * 0.05); $("x10").textContent = fmt(total * 0.1);
+  $("rtitle").innerHTML = total * 0.1 >= 30000 ? "匯率對你<br>很有感" : "匯率對你<br>影響不大";
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>房貸壓力試算｜Vincent 財商筆記</title>
+<meta name="description" content="輸入收入、生活費、貸款條件，看每月繳完房貸還剩多少、利率變動和寬限期結束後還撐不撐得住。">
+<meta property="og:title" content="房貸壓力試算">
+<meta property="og:description" content="繳完房貸每月還剩多少？你的壓力在哪個等級｜Vincent 財商筆記">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@700;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/quiz.css">
+<style>
+label{display:block;font-weight:700;font-size:15px;margin:16px 0 6px}
+label:first-of-type{margin-top:4px}
+.hint{font-size:13.5px;color:var(--dim);margin:-2px 0 8px;line-height:1.6}
+.inp{display:flex;align-items:center;gap:8px}
+.inp input{flex:1;min-width:0;border:1px solid var(--line);border-radius:12px;background:var(--card2);padding:12px 14px;font-size:18px;font-family:var(--sans);color:var(--text)}
+.inp input:focus{outline:none;border-color:var(--gold)}
+.inp span{font-size:15px;color:var(--dim);white-space:nowrap}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.seg button{border:1px solid var(--line);background:var(--card2);border-radius:12px;padding:11px 4px;font-size:15px;font-family:var(--sans);color:var(--text);cursor:pointer}
+.seg button.on{border-color:var(--gold);background:#fbf0dc;color:#8a5a12;font-weight:700}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:15px}
+.row b{font-family:var(--serif);font-size:20px;white-space:nowrap}
+.lv{border-radius:14px;padding:14px 16px;margin:12px 0;font-size:15px}
+.g{background:#e8f3ea;border-left:4px solid #2e7d32}.y{background:#fbf0dc;border-left:4px solid #b07a1e}.r{background:#fdecea;border-left:4px solid #c0392b}
+.list li{margin:0 0 8px 20px;font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <section id="intro">
+    <div class="hero">
+      <div class="tag">VINCENT 財商筆記｜買房</div>
+      <h1>房貸<br><em>壓力試算</em></h1>
+      <p>很多人不是買不起，是買了就沒有犯錯的空間。輸入你的數字，看每月繳完房貸還剩多少、遇到狀況撐不撐得住。</p>
+      <div class="meta">約 1 分鐘・不會收集你的資料</div>
+    </div>
+
+    <div class="card">
+      <div class="qno">開始試算</div>
+      <label for="inc">每月實領收入</label>
+      <p class="hint">扣掉勞健保後實際入帳的；雙薪就填兩個人加起來</p>
+      <div class="inp"><input id="inc" inputmode="numeric" placeholder="例如 70000"><span>元／月</span></div>
+
+      <label for="live">每月生活費</label>
+      <p class="hint">吃住交通、保險、孝親、小孩，房貸以外的固定支出</p>
+      <div class="inp"><input id="live" inputmode="numeric" placeholder="例如 25000"><span>元／月</span></div>
+
+      <label for="loan">貸款金額</label>
+      <p class="hint">還沒買就填你打算貸的金額</p>
+      <div class="inp"><input id="loan" inputmode="numeric" placeholder="例如 8400000"><span>元</span></div>
+
+      <label for="rate">年利率</label>
+      <div class="inp"><input id="rate" inputmode="decimal" value="2.4"><span>%</span></div>
+
+      <label>貸款年限</label>
+      <div class="seg" id="yrs"><button data-v="20">20 年</button><button data-v="30" class="on">30 年</button><button data-v="35">35 年</button><button data-v="40">40 年</button></div>
+
+      <label>寬限期（只繳利息）</label>
+      <div class="seg" id="grace"><button data-v="0" class="on">沒有</button><button data-v="2">2 年</button><button data-v="3">3 年</button><button data-v="5">5 年</button></div>
+
+      <label for="cash">交屋後手上還有的存款</label>
+      <p class="hint">付完頭期、裝潢、稅費後剩下的</p>
+      <div class="inp"><input id="cash" inputmode="numeric" placeholder="例如 0"><span>元</span></div>
+
+      <button class="btn btn-gold" id="calc" style="margin-top:20px">算出我的房貸壓力</button>
+    </div>
+    <p class="note">試算只在你的手機上進行，不會送出任何資料</p>
+  </section>
+
+  <section id="result" class="hide">
+    <div class="card">
+      <span class="rtag">你的房貸壓力</span>
+      <div class="rtitle" id="rtitle"></div>
+      <div id="lv"></div>
+      <div class="row"><span id="payLabel">每月房貸</span><b id="pay"></b></div>
+      <div class="row"><span>繳完房貸和生活費，每月剩</span><b id="left"></b></div>
+      <div class="row"><span>房貸佔收入</span><b id="ratio"></b></div>
+      <div class="row"><span>存款撐得住幾個月沒收入</span><b id="months"></b></div>
+    </div>
+
+    <div class="card">
+      <span class="rtag">壓力測試</span>
+      <ul class="list" id="stress" style="margin-top:12px"></ul>
+    </div>
+
+    <div class="card">
+      <span class="rtag">簽約前可以調的地方</span>
+      <ul class="list" style="margin-top:12px">
+        <li><b>先留 6 個月預備金</b>（房貸＋生活費），不要把存款全部押進去</li>
+        <li><b>找對銀行</b>：同一個人，不同銀行給的利率、成數、年限、寬限期可能差很多</li>
+        <li><b>寬限期</b>少繳的錢先存起來，並用寬限期結束後的月付檢查預算</li>
+        <li>總價、裝潢、買的時間，都是可以調的變數</li>
+      </ul>
+    </div>
+
+    <div class="card cta">
+      <p>數字算出來之後，下一步是找條件更適合你的銀行和貸款方式。想聊聊你的狀況，直接私訊我，跟我說你算出來的結果。</p>
+      <a class="btn btn-gold" href="https://ig.me/m/vincent781022">私訊 Vincent</a>
+      <button class="btn btn-ghost" id="again">重新試算</button>
+    </div>
+    <p class="note">本頁為一般理財觀念試算，以本息平均攤還估算，未計手續費與保險，實際以銀行核貸條件為準。利率可能變動，寬限期結束後月付會提高。</p>
+  </section>
+
+</div>
+<script>
+const $ = (id) => document.getElementById(id);
+const num = (id) => { const v = parseFloat(String($(id).value).replace(/[^\d.]/g, "")); return isNaN(v) ? 0 : v; };
+const fmt = (n) => Math.round(n).toLocaleString("zh-TW") + " 元";
+const pmt = (P, a, n) => { const r = a / 12; return r === 0 ? P / n : P * r / (1 - Math.pow(1 + r, -n)); };
+let yrs = 30, grace = 0;
+const seg = (id, set) => $(id).onclick = (e) => { const b = e.target.closest("button"); if (!b) return; set(+b.dataset.v); [...$(id).children].forEach((x) => x.classList.toggle("on", x === b)); };
+seg("yrs", (v) => yrs = v); seg("grace", (v) => grace = v);
+["inc", "live", "loan", "cash"].forEach((id) => $(id).addEventListener("input", (e) => {
+  const raw = e.target.value.replace(/[^\d]/g, ""); e.target.value = raw ? (+raw).toLocaleString("en-US") : "";
+}));
+$("calc").onclick = () => {
+  const inc = num("inc"), live = num("live"), loan = num("loan"), rate = num("rate") / 100, cash = num("cash");
+  if (!inc || !loan) { alert("請至少填「每月實領收入」和「貸款金額」"); return; }
+  const n = yrs * 12, g = grace * 12;
+  const full = pmt(loan, rate, n);
+  const now = grace ? loan * rate / 12 : full;
+  const after = grace ? pmt(loan, rate, n - g) : full;
+  const left = inc - live - now, ratio = now / inc, burn = now + live;
+  $("payLabel").textContent = grace ? `每月房貸（寬限期只繳息）` : "每月房貸";
+  $("pay").textContent = fmt(now);
+  $("left").textContent = fmt(left); $("left").style.color = left < 0 ? "#a93226" : "";
+  $("ratio").textContent = Math.round(ratio * 100) + "%";
+  $("months").textContent = burn > 0 ? (cash / burn).toFixed(1) + " 個月" : "—";
+  const bad = (grace ? (after / inc) : ratio);
+  let cls, title, msg;
+  if (left < 0 || bad >= 0.5) { cls = "r"; title = "紅燈<br>壓力很大"; msg = "繳完房貸和生活費已經不夠用，或房貸會吃掉一半以上的收入。這種狀況任何一個意外都很難撐，建議先調整總價、貸款條件或購屋時間。"; }
+  else if (bad >= 0.35 || cash < burn * 6) { cls = "y"; title = "黃燈<br>撐得住但很緊"; msg = cash < burn * 6 ? `日子過得去，但存款不到 6 個月的房貸＋生活費（${fmt(burn * 6)}），遇到收入中斷會很吃緊。` : "房貸佔收入超過三成五，每月可以存的錢不多，利率或收入一有變化就會有感。"; }
+  else { cls = "g"; title = "綠燈<br>還有餘裕"; msg = "房貸比例和預備金都在比較安全的範圍。下一步可以比較銀行條件，看能不能再省一點利息。"; }
+  $("rtitle").innerHTML = title;
+  $("lv").innerHTML = `<div class="lv ${cls}">${msg}</div>`;
+  const up = grace ? pmt(loan, rate + 0.005, n - g) : pmt(loan, rate + 0.005, n);
+  const items = [
+    `<b>3 個月沒收入</b>：房貸＋生活費要 ${fmt(burn * 3)}，你的存款${cash >= burn * 3 ? "撐得住" : `還差 ${fmt(burn * 3 - cash)}`}。`,
+    `<b>利率多 0.5 個百分點</b>：${grace ? "寬限期結束後" : ""}每月約 ${fmt(up)}，比現在${grace ? "攤還月付" : ""}多 ${fmt(up - (grace ? after : full))}。`,
+  ];
+  if (grace) items.push(`<b>寬限期結束後</b>：第 ${grace + 1} 年起月付從 ${fmt(now)} 變成約 ${fmt(after)}，到時候每月剩 ${fmt(inc - live - after)}。`);
+  $("stress").innerHTML = items.map((i) => `<li>${i}</li>`).join("");
+  $("intro").classList.add("hide"); $("result").classList.remove("hide"); window.scrollTo(0, 0);
+};
+$("again").onclick = () => { $("result").classList.add("hide"); $("intro").classList.remove("hide"); window.scrollTo(0, 0); };
+</script>
+</body>
+</html>
